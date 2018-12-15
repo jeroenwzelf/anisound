@@ -1,0 +1,18 @@
+[ ] Profile pictures for entry icons
+[ ] Make system that gets real entries from online database api's and replace it with the sampledata
+	[ ] Find out easiest way to get lots of data, fast, with minimal amount of requests
+	[ ] Implement querying requests and saving the data
+	[ ] Implement what happens when API request limit is reached
+	[ ] Implement updating data
+	[ ] Replace sampledata with new system
+[ ] Make a new GoogleMaps Style in styledMap.js
+	[ ] Make style in SnazzyMaps
+[ ] Set up Google Billing to get rid of 'For development purposes only' map
+	[ ] Get credit card
+	[ ] Link credit card in Google Developer Console
+[ ] Make the popup window
+	[ ] Style it
+	[ ] Add Sound
+	[x] Add Name_English
+	[x] Add Name_Latin
+	[x] Add Location + Country

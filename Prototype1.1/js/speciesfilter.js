@@ -54,8 +54,8 @@ class MapManager {
 	    	url: dataEntry.url,
 	        position: new google.maps.LatLng(dataEntry.latitude,
 		    	dataEntry.longitude),
-		    	icon: getMarkerIcon(dataEntry.type)
-		    });
+		    icon: getMarkerIcon(dataEntry)
+		});
 	}
 
 	filter_clicked_birds(cb) {
@@ -113,4 +113,8 @@ function getSpeciesColor(species) {
 		case "felines": 	return "rgba(0, 255, 0, 1)";
 		case "primates": 	return "rgba(0, 0, 255, 1)";
 	}
+}
+
+function getSpeciesImage(species) {
+	return "sampledata/img/felines.png";
 }

@@ -806,13 +806,15 @@ MarkerClusterer.prototype.createClusters_ = function() {
       this.addToClosestCluster_(marker);
     }
     else {
+      //  marker popup window
       marker.addListener('click', function() {
-          //  marker popups
           var contentString = '<div id="content">'+
-          '<div id="siteNotice">'+
-          '</div>'+
           '<h1 id="firstHeading" class="firstHeading">' + this.name_en + '</h1>'+
           '<div id="bodyContent">'+
+            '(' + this.name_la + ') </br>'+
+            this.loc + ', ' + this.country + ' </br>'+
+          '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/wav"></audio>'+
+          '<button id="audiobutton" onclick="playAudio()" type="button">Stop</button>'+
           '</div>'+
           '</div>';
 
@@ -820,6 +822,12 @@ MarkerClusterer.prototype.createClusters_ = function() {
             content: contentString
           });
           infowindow.open(this.getMap(), this);
+
+          setTimeout(function () {
+            document.getElementById('audio').addEventListener('ended', function() {
+              document.getElementById('audiobutton').textContent = 'Play';
+            });
+          }, 50);
       });
     }
   }

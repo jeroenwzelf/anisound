@@ -32,16 +32,22 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script type="text/javascript">
-		function getMarkerIcon(species) {
+		function getMarkerIcon(entry) {
 			var canvas, context;
 			var width = 50; var height = 50; var radius = 20;
 
-			var color = getSpeciesColor(species);
+			var color = getSpeciesColor(entry.type);
 
 			canvas = document.createElement("canvas");
 			canvas.width = width;
 			canvas.height = height;
 
+			var img = new Image();
+			img.onload = function() {
+				context.drawImage(img, 0, 0);
+			}
+			img.src = getSpeciesImage(entry.type);
+			
 			context = canvas.getContext("2d");
 			context.clearRect(0, 0, width, height);
 			context.fillStyle = "rgba(255, 255, 255, 1)";
@@ -54,6 +60,9 @@
 			context.fill();
 			context.lineWidth=3;
 			context.stroke();
+
+			//context.drawImage(img, 0, 0);
+
 			return canvas.toDataURL();
 		}
 
@@ -73,6 +82,18 @@
 		}
 		function filter_clicked_primates(cb) {
 			this.mapManager.filter_clicked_primates(cb);
+		}
+
+		function playAudio() {
+			var button = document.getElementById('audiobutton');
+			if (button.textContent == "Stop") {
+				button.textContent = "Play";
+				document.getElementById('audio').pause();
+			}
+			else {
+				document.getElementById('audio').play();
+				button.textContent = "Stop";
+			}
 		}
 
       	google.maps.event.addDomListener(window, 'load', initialize);

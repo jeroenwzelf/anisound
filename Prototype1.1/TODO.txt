@@ -1,13 +1,15 @@
 [ ] Profile pictures for entry icons
 [ ] Fix click eventlisteners not refreshing after zoom
-[ ] Make the popup window
-	[ ] Style it
+[ ] Add more test entries
+[x] Make the popup window
 	[x] Add Sound
 	[x] Add Name_English
 	[x] Add Name_Latin
 	[x] Add Location + Country
 
 # FUTURE
+[ ] Make the popup window
+	[ ] Style it
 [ ] Set up Google Billing to get rid of 'For development purposes only' map
 	[ ] Get credit card
 	[ ] Link credit card in Google Developer Console

@@ -22,7 +22,7 @@
     <script async defer
     	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhjEZgjkFvvD2Yvf099m5qtvipcm79ays&callback=initialize">
     </script>
-    <script type="text/javascript" src="sampledata/data.json"></script>
+    <script type="text/javascript" src="sampledata/xeno-canto_sample.json"></script>
     <script type="text/javascript" src="js/markerclusterer.js"></script>
     <script type="text/javascript" src="js/speciesfilter.js"></script>
     <script type="text/javascript" src="js/styledMap.js"></script>
@@ -32,40 +32,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script type="text/javascript">
-		function getMarkerIcon(entry) {
-			var canvas, context;
-			var width = 50; var height = 50; var radius = 20;
-
-			var color = getSpeciesColor(entry.type);
-
-			canvas = document.createElement("canvas");
-			canvas.width = width;
-			canvas.height = height;
-
-			var img = new Image();
-			img.onload = function() {
-				context.drawImage(img, 0, 0);
-			}
-			img.src = getSpeciesImage(entry.type);
-			
-			context = canvas.getContext("2d");
-			context.clearRect(0, 0, width, height);
-			context.fillStyle = "rgba(255, 255, 255, 1)";
-			context.strokeStyle = color;
-
-			context.beginPath();
-			context.arc(width/2, height/2, radius, 0, 2*Math.PI);
-			context.closePath();
-
-			context.fill();
-			context.lineWidth=3;
-			context.stroke();
-
-			//context.drawImage(img, 0, 0);
-
-			return canvas.toDataURL();
-		}
-
 		function initialize() {
 			document.getElementById("colordiv_birds").style.borderLeftColor = getSpeciesColor("birds");
 			document.getElementById("colordiv_felines").style.borderLeftColor = getSpeciesColor("felines");

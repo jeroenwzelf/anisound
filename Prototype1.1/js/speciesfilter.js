@@ -45,17 +45,19 @@ class MapManager {
 	}
 
 	getMarkerFromJson(dataEntry) {
-		return new google.maps.Marker({
+		var marker = new google.maps.Marker({
 	    	name_en: dataEntry.en,
 	    	name_la: dataEntry.gen + " " + dataEntry.sp,
 	    	type: dataEntry.type,
 	    	country: dataEntry.cnt,
 	    	loc: dataEntry.loc,
 	    	url: dataEntry.url,
+	    	icon: dataEntry.ico,
 	        position: new google.maps.LatLng(dataEntry.latitude,
 		    	dataEntry.longitude),
-		    icon: getMarkerIcon(dataEntry)
+	        icon: this.getMarkerIcon(dataEntry)
 		});
+		return marker;
 	}
 
 	filter_clicked_birds(cb) {
@@ -63,7 +65,7 @@ class MapManager {
 			this.markerCluster.addMarkers(this.getBirds());
 		}
 		else {
-			for (var i = 0, marker; marker =  this.markerCluster.getMarkers()[i]; i++) {
+			for (var i = 0, marker; marker = this.markerCluster.getMarkers()[i]; i++) {
 				if (marker.type == 'birds') {
 					if (this.markerCluster.removeMarker(marker)) i--;
 				}
@@ -76,7 +78,7 @@ class MapManager {
 			this.markerCluster.addMarkers(this.getFelines());
 		}
 		else {
-			for (var i = 0, marker; marker =  this.markerCluster.getMarkers()[i]; i++) {
+			for (var i = 0, marker; marker = this.markerCluster.getMarkers()[i]; i++) {
 				if (marker.type == 'felines') {
 					if (this.markerCluster.removeMarker(marker)) i--;
 				}
@@ -89,12 +91,42 @@ class MapManager {
 			this.markerCluster.addMarkers(this.getPrimates());
 		}
 		else {
-			for (var i = 0, marker; marker =  this.markerCluster.getMarkers()[i]; i++) {
+			for (var i = 0, marker; marker = this.markerCluster.getMarkers()[i]; i++) {
 				if (marker.type == 'primates') {
 					if (this.markerCluster.removeMarker(marker)) i--;
 				}
 			}
 		}
+	}
+
+	getMarkerIcon(dataEntry) {
+		var profileImg = new Image();
+		profileImg.src = dataEntry.ico;
+
+		var canvas, context;
+		var width = 50; var height = 50; var radius = 20;
+
+		var color = getSpeciesColor(dataEntry.type);
+
+		canvas = document.createElement("canvas");
+		canvas.width = width;
+		canvas.height = height;
+		
+		context = canvas.getContext("2d");
+		context.clearRect(0, 0, width, height);
+		context.fillStyle = "rgba(255, 255, 255, 1)";
+		context.strokeStyle = color;
+
+		context.beginPath();
+		context.arc(width/2, height/2, radius, 0, 2*Math.PI);
+		context.closePath();
+
+		context.fill();
+		context.drawImage(profileImg, 3, 3, width-6, height-6);
+		context.lineWidth=3;
+		context.stroke();
+
+		return canvas.toDataURL();
 	}
 }
 
@@ -113,8 +145,4 @@ function getSpeciesColor(species) {
 		case "felines": 	return "rgba(0, 255, 0, 1)";
 		case "primates": 	return "rgba(0, 0, 255, 1)";
 	}
-}
-
-function getSpeciesImage(species) {
-	return "sampledata/img/felines.png";
 }

@@ -8,7 +8,7 @@ var data = {
 			"loc": "Parabara savannah",
 			"cnt": "Guyana",
 			"url": "sampledata/sounds/Jaguar.mp3",
-			"ico": "sampledata/img/feline.png",
+			"ico": "sampledata/img/jaguar.png",
 			"longitude": -59.253267, 
 			"latitude": 2.275797
 		},
@@ -19,7 +19,7 @@ var data = {
 			"loc": "Ruaha National Park, Iringa",
 			"cnt": "Tanzania",
 			"url": "sampledata/sounds/Lion.mp3",
-			"ico": "sampledata/img/feline.png",
+			"ico": "sampledata/img/lion.png",
 			"longitude": 34.475310,
 			"latitude": -7.432177
 		},
@@ -30,7 +30,7 @@ var data = {
 			"loc": "Berenty Reserve, Toliara",
 			"cnt": "Madagascar",
 			"url": "sampledata/sounds/RING-TAILEDLemur.mp3",
-			"ico": "sampledata/img/feline.png",
+			"ico": "sampledata/img/lemur.png",
 			"longitude": 46.144841,
 			"latitude": -25.067715
 		},
@@ -41,7 +41,7 @@ var data = {
 			"loc": "Mekar Tani, Mendawai",
 			"cnt": "Indonesia",
 			"url": "sampledata/sounds/Orangutan.mp3",
-			"ico": "sampledata/img/feline.png",
+			"ico": "sampledata/img/orangutan.png",
 			"longitude": 113.394218,
 			"latitude": -2.920695
 		},
@@ -52,7 +52,7 @@ var data = {
 			"loc": "Aledeghe WIldlife Reserve",
 			"cnt": "Ethiopia",
 			"url": "sampledata/sounds/XC292043-Somali Ostrich2015-11-9-1.mp3",
-			"ico": "sampledata/img/feline.png",
+			"ico": "sampledata/img/ostrich.png",
 			"longitude": 40.4529,
 			"latitude": 9.4529
 		},
@@ -63,7 +63,7 @@ var data = {
 			"loc": "Pouso Alegre, Mato Grosso",
 			"cnt": "Brazil",
 			"url": "sampledata/sounds/XC191451-LS114319 Greater Rhea Hoyer.mp3",
-			"ico": "sampledata/img/feline.png",
+			"ico": "sampledata/img/rhea.png",
 			"longitude": -56.7451,
 			"latitude": -16.5034
 		},
@@ -74,7 +74,7 @@ var data = {
 			"loc": "Parque Nacional da Amazônia",
 			"cnt": "Brazil",
 			"url": "sampledata/sounds/CERCNR10.mp3",
-			"ico": "sampledata/img/feline.png",
+			"ico": "sampledata/img/tinamus.png",
 			"longitude": -56.3001,
 			"latitude": -4.5167 
 		}

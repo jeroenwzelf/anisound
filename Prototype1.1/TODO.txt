@@ -1,11 +1,6 @@
-[ ] Profile pictures for entry icons
-[ ] Fix click eventlisteners not refreshing after zoom
 [ ] Add more test entries
-[x] Make the popup window
-	[x] Add Sound
-	[x] Add Name_English
-	[x] Add Name_Latin
-	[x] Add Location + Country
+[ ] Fix asynchronous problem with profile pictures for entry icons
+[ ] Fix click eventlisteners not refreshing after zoom
 
 # FUTURE
 [ ] Make the popup window

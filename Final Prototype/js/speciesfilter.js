@@ -100,10 +100,6 @@ class MapManager {
 	}
 
 	getMarkerIcon(dataEntry) {
-		// Creating profile img
-		var profileImg = new Image();
-		profileImg.src = "images/" + dataEntry.type + ".png";
-
 		var width = 50; var height = 50; var radius = 20; var imgscale = 20;
 		var canvas, context;
 
@@ -119,16 +115,15 @@ class MapManager {
 		// Create colored circle
 		context.fillStyle = "rgba(255, 255, 255, 1)";
 		context.strokeStyle = getSpeciesColor(dataEntry.type);
+		context.lineWidth=3;
 		context.beginPath();
 		context.arc(width/2, height/2, radius, 0, 2*Math.PI);
 		context.closePath();
 
 		// Draw context
-		context.fill();
-		context.lineWidth=3;
-		context.stroke();
-
-		context.drawImage(profileImg, imgscale/2, imgscale/2, width-imgscale, height-imgscale);
+		context.fill();	// background
+		context.drawImage(document.getElementById(dataEntry.type), imgscale/2, imgscale/2, width-imgscale, height-imgscale);	// image
+		context.stroke();	// colored circle
 
 		return canvas.toDataURL();
 	}

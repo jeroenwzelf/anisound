@@ -22,17 +22,25 @@
     <script async defer
     	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhjEZgjkFvvD2Yvf099m5qtvipcm79ays&callback=initialize">
     </script>
+	<!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<!-- anisound scripts -->
     <script type="text/javascript" src="sampledata/xeno-canto_sample.json"></script>
     <script type="text/javascript" src="js/markerclusterer.js"></script>
     <script type="text/javascript" src="js/speciesfilter.js"></script>
     <script type="text/javascript" src="js/styledMap.js"></script>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" type="text/css" href="cs/style.css">
-	<!-- Load an icon library to show a hamburger menu (bars) on small screens -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script type="text/javascript">
-		function initialize() {
+    	function wait_for_loading() {
+    		if (document.getElementById("birds").complete
+    			&& document.getElementById("felines").complete
+    			&& document.getElementById("primates").complete)
+    			init();
+    	}
+
+		function init() {
 			document.getElementById("colordiv_birds").style.borderLeftColor = getSpeciesColor("birds");
 			document.getElementById("colordiv_felines").style.borderLeftColor = getSpeciesColor("felines");
 			document.getElementById("colordiv_primates").style.borderLeftColor = getSpeciesColor("primates");
@@ -61,11 +69,13 @@
 				button.textContent = "Stop";
 			}
 		}
-
-      	google.maps.event.addDomListener(window, 'load', initialize);
+      	//google.maps.event.addDomListener(window, 'load', init);
     </script>
 </head>
 <body>
+	<img id="birds" src="images/birds.png" style="display:none" onload="wait_for_loading()">
+    <img id="felines" src="images/felines.png" style="display:none" onload="wait_for_loading()">
+    <img id="primates" src="images/felines.png" style="display:none" onload="wait_for_loading()">
 	<!-- Sidebar -->
 	<div class="w3-sidebar w3-bar-block" id="speciesfilter">
 		<button onclick="closeSpeciesFilter()" class="w3-bar-item w3-button w3-large">Close &times;</button>

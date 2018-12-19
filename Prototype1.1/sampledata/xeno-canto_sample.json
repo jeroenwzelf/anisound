@@ -1,5 +1,5 @@
 var data = {
-	"count": 6,
+	"count": 11,
 	"entries": [
 		{	"en": "Jaguar",
 			"gen": "Panthera",
@@ -77,6 +77,50 @@ var data = {
 			"ico": "sampledata/img/tinamus.png",
 			"longitude": -56.3001,
 			"latitude": -4.5167 
+		},
+		{	"en": "Highland Tinamou",
+			"gen": "Nothocercus",
+			"sp": "bonapartei",
+			"type": "birds",
+			"loc": "Reserva Natural Mesenia - Paramillo",
+			"cnt": "Colombia",
+			"url": "sampledata/sounds/Nothocecus bonaparttet.mp3",
+			"ico": "",
+			"longitude": -75.8959,
+			"latitude": 5.4828 
+		},
+		{	"en": "Tawny-breasted Tinamou",
+			"gen": "Nothocercus",
+			"sp": "julius",
+			"type": "birds",
+			"loc": "Carchi: Páramo El Angel 3 km SE El Moran",
+			"cnt": "Ecuador",
+			"url": "sampledata/sounds/XC238667-Nothocercus_julius07cut2B.mp3",
+			"ico": "",
+			"longitude": -78.037,
+			"latitude": 0.748 
+		},
+		{	"en": "Southern Brown Kiwi",
+			"gen": "Apteryx",
+			"sp": "australis lawryi",
+			"type": "birds",
+			"loc": "Ocean beach, Stewart Isl…and District, Southland",
+			"cnt": "New Zealand",
+			"url": "sampledata/sounds/XC389022-kiwi.mp3",
+			"ico": "",
+			"longitude": 168.1768,
+			"latitude": -46.9705
+		},
+		{	"en": "Southern Cassowary",
+			"gen": "Casuarius",
+			"sp": "casuarius",
+			"type": "birds",
+			"loc": "Lake Eacham, Queensland",
+			"cnt": "Australia",
+			"url": "sampledata/sounds/XC158488-2011110205_1841_Casuarius casuarius_chant_FD.mp3",
+			"ico": "",
+			"longitude": 145.6175,
+			"latitude": -17.2834
 		}
 	]
 }

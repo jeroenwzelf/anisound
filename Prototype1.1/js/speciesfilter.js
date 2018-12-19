@@ -126,7 +126,7 @@ class MapManager {
 
 		// Creating profile img
 		var profileImg = new Image();
-		profileImg.src = dataEntry.ico || "sampledata/img/base/" + dataEntry.type;
+		profileImg.src = dataEntry.ico || "sampledata/img/base/" + dataEntry.type + ".png";
 		context.drawImage(profileImg, imgscale/2, imgscale/2, width-imgscale, height-imgscale);
 
 		return canvas.toDataURL();

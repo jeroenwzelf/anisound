@@ -100,6 +100,10 @@ class MapManager {
 	}
 
 	getMarkerIcon(dataEntry) {
+		// Creating profile img
+		var profileImg = new Image();
+		profileImg.src = dataEntry.ico || "sampledata/img/base/" + dataEntry.type + ".png";
+
 		var width = 50; var height = 50; var radius = 20; var imgscale = 20;
 		var canvas, context;
 
@@ -124,9 +128,6 @@ class MapManager {
 		context.lineWidth=3;
 		context.stroke();
 
-		// Creating profile img
-		var profileImg = new Image();
-		profileImg.src = dataEntry.ico || "sampledata/img/base/" + dataEntry.type + ".png";
 		context.drawImage(profileImg, imgscale/2, imgscale/2, width-imgscale, height-imgscale);
 
 		return canvas.toDataURL();

@@ -129,15 +129,6 @@ class MapManager {
 	}
 }
 
-function openSpeciesFilter() {
-	document.getElementById("speciesfilter").style.width = "20%";
-	document.getElementById("speciesfilter").style.left = "0%";
-}
-
-function closeSpeciesFilter() {
-	document.getElementById("speciesfilter").style.left = "-20%";
-}
-
 function getSpeciesColor(species) {
 	switch (species) {
 		case "birds": 		return "rgba(255, 0, 0, 1)";

@@ -31,7 +31,7 @@
 
 #speciesfilter {
 	position: fixed;
-	left: -20%;
+  width: 20%;
 	float: left;
 	color: #333;
 	text-align: center;
@@ -39,6 +39,14 @@
     -moz-transition-duration: 0.3s;
     -o-transition-duration: 0.3s;
     transition-duration: 0.3s;
+}
+
+.filter_open {
+  left: 0%;
+}
+
+.filter_closed {
+  left: -20%;
 }
 
 /* -- SPECIES FILTER CHECKBOX -- */

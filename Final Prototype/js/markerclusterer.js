@@ -812,7 +812,7 @@ MarkerClusterer.prototype.createClusters_ = function() {
 
 MarkerClusterer.prototype.addPopupWindowListeners = function() {
   for (var i = 0, marker; marker = this.markers_[i]; i++) {
-    google.maps.event.clearListeners(this.markers_[i], 'click');  // clearing all marker onclick events
+    google.maps.event.clearListeners(this.markers_[i], 'click');  // clearing old marker onclick events
     marker.addListener('click', function() {
         var contentString = '<div id="content">'+
         '<h1 id="firstHeading" class="firstHeading">' + this.name_en + '</h1>'+

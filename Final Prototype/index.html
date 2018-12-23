@@ -22,6 +22,7 @@
     <script async defer
     	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhjEZgjkFvvD2Yvf099m5qtvipcm79ays&callback=initialize">
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>	<!-- jquery for event propagation -->
 	<!-- Load an icon library to show a hamburger menu (bars) on small screens -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -69,7 +70,6 @@
 				button.textContent = "Stop";
 			}
 		}
-      	//google.maps.event.addDomListener(window, 'load', init);
     </script>
 </head>
 <body>
@@ -77,8 +77,8 @@
     <img id="felines" src="images/felines.png" style="display:none" onload="wait_for_loading()">
     <img id="primates" src="images/felines.png" style="display:none" onload="wait_for_loading()">
 	<!-- Sidebar -->
-	<div class="w3-sidebar w3-bar-block" id="speciesfilter">
-		<button onclick="closeSpeciesFilter()" class="w3-bar-item w3-button w3-large">Close &times;</button>
+	<div class="w3-sidebar w3-bar-block filter_closed" id="speciesfilter">
+		<button id="closeSpeciesFilterButton" class="w3-bar-item w3-button w3-large">Close &times;</button>
 		<div style="padding: 5px 30px">
 			<div style="border-left: 6px solid black; padding: 0px 15px" id = colordiv_birds>
 				<label for="cbx1" class="label-cbx">
@@ -125,11 +125,34 @@
 		  </div>
 	</div>
 	<div class="topnav" id="myTopnav">
-		<a href="javascript:void(0);" class="icon" onclick="openSpeciesFilter(this)">
+		<a id="openSpeciesFilterButton" href="javascript:void(0);" class="icon">
 			<i class="fa fa-bars"></i>
 			<span>Species filter</span>
 		</a>
 	</div>
 	<div id="map"></div>
 	</body>
+
+	<!-- Opening and cosing species filter -->
+	<script type="text/javascript">
+		$('#openSpeciesFilterButton').click(function(e) {
+			e.stopPropagation();
+			$('#speciesfilter').removeClass('filter_closed');
+			$('#speciesfilter').toggleClass('filter_open');
+		});
+
+		$('#closeSpeciesFilterButton').click(function(e) {
+			$('#speciesfilter').toggleClass('filter_closed');
+			$('#speciesfilter').removeClass('filter_open');
+		});
+
+		$('#speciesfilter').click(function(e) {
+			e.stopPropagation();
+		});
+
+		$(document).click(function(e) { 
+			$('#speciesfilter').toggleClass('filter_closed');
+			$('#speciesfilter').removeClass('filter_open');
+		});
+	</script>
 </html>

@@ -1,6 +1,6 @@
 [x] Fix asynchronous problem with profile pictures for entry icons
 [x] make all entries have default icons
-[ ] Fix click eventlisteners not refreshing after zoom
+[x] Fix click eventlisteners not refreshing after zoom
 [ ] popup needs to close when clicking somewhere else
 [ ] filter needs to close when clicking somewhere else
 [ ] Set up Google Billing to get rid of 'For development purposes only' map

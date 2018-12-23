@@ -178,6 +178,7 @@ function MarkerClusterer(map, data, opt_markers, opt_options) {
       that.prevZoom_ = zoom;
       that.resetViewport();
     }
+    //this.createClusters_();
   });
 
   google.maps.event.addListener(this.map_, 'idle', function() {
@@ -799,37 +800,41 @@ MarkerClusterer.prototype.createClusters_ = function() {
       this.map_.getBounds().getNorthEast());
   var bounds = this.getExtendedBounds(mapBounds);
 
-  //google.maps.event.clearListeners(this.map_, 'bounds_changed');
   for (var i = 0, marker; marker = this.markers_[i]; i++) {
-    google.maps.event.clearListeners(this.markers_[i], 'click');  // clearing all marker onclick events
     if (!marker.isAdded && this.isMarkerInBounds_(marker, bounds)) {  
       this.addToClosestCluster_(marker);
     }
     else {
-      //  marker popup window
-      marker.addListener('click', function() {
-          var contentString = '<div id="content">'+
-          '<h1 id="firstHeading" class="firstHeading">' + this.name_en + '</h1>'+
-          '<div id="bodyContent">'+
-            '(' + this.name_la + ') </br>'+
-            this.loc + ', ' + this.country + ' </br>'+
-          '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/wav"></audio>'+
-          '<button id="audiobutton" onclick="playAudio()" type="button">Stop</button>'+
-          '</div>'+
-          '</div>';
-
-          var infowindow = new google.maps.InfoWindow({
-            content: contentString
-          });
-          infowindow.open(this.getMap(), this);
-
-          setTimeout(function () {
-            document.getElementById('audio').addEventListener('ended', function() {
-              document.getElementById('audiobutton').textContent = 'Play';
-            });
-          }, 50);
-      });
+      this.addPopupWindowListeners();
     }
+  }
+}
+
+MarkerClusterer.prototype.addPopupWindowListeners = function() {
+  for (var i = 0, marker; marker = this.markers_[i]; i++) {
+    google.maps.event.clearListeners(this.markers_[i], 'click');  // clearing all marker onclick events
+    marker.addListener('click', function() {
+        var contentString = '<div id="content">'+
+        '<h1 id="firstHeading" class="firstHeading">' + this.name_en + '</h1>'+
+        '<div id="bodyContent">'+
+          '(' + this.name_la + ') </br>'+
+          this.loc + ', ' + this.country + ' </br>'+
+        '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/wav"></audio>'+
+        '<button id="audiobutton" onclick="playAudio()" type="button">Stop</button>'+
+        '</div>'+
+        '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+        infowindow.open(this.getMap(), this);
+
+        setTimeout(function () {
+          document.getElementById('audio').addEventListener('ended', function() {
+            document.getElementById('audiobutton').textContent = 'Play';
+          });
+        }, 50);
+    });
   }
 }
 

@@ -73,6 +73,7 @@ function MarkerClusterer(map, data, opt_markers, opt_options) {
   this.map_ = map;
 
   this.data = data;
+  this.infoWindow = new google.maps.InfoWindow();
 
   /**
    * @type {Array.<google.maps.Marker>}
@@ -805,12 +806,12 @@ MarkerClusterer.prototype.createClusters_ = function() {
       this.addToClosestCluster_(marker);
     }
     else {
-      this.addPopupWindowListeners();
+      this.addPopupWindowListeners(this.infoWindow);
     }
   }
 }
 
-MarkerClusterer.prototype.addPopupWindowListeners = function() {
+MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
   for (var i = 0, marker; marker = this.markers_[i]; i++) {
     google.maps.event.clearListeners(this.markers_[i], 'click');  // clearing old marker onclick events
     marker.addListener('click', function() {
@@ -824,10 +825,8 @@ MarkerClusterer.prototype.addPopupWindowListeners = function() {
         '</div>'+
         '</div>';
 
-        var infowindow = new google.maps.InfoWindow({
-          content: contentString
-        });
-        infowindow.open(this.getMap(), this);
+        infoWindow.setContent(contentString);
+        infoWindow.open(this.getMap(), this);
 
         setTimeout(function () {
           document.getElementById('audio').addEventListener('ended', function() {

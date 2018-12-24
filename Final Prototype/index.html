@@ -138,11 +138,11 @@
 		$('#openSpeciesFilterButton').click(function(e) {
 			e.stopPropagation();
 			$('#speciesfilter').removeClass('filter_closed');
-			$('#speciesfilter').toggleClass('filter_open');
+			$('#speciesfilter').addClass('filter_open');
 		});
 
 		$('#closeSpeciesFilterButton').click(function(e) {
-			$('#speciesfilter').toggleClass('filter_closed');
+			$('#speciesfilter').addClass('filter_closed');
 			$('#speciesfilter').removeClass('filter_open');
 		});
 
@@ -150,8 +150,8 @@
 			e.stopPropagation();
 		});
 
-		$(document).click(function(e) { 
-			$('#speciesfilter').toggleClass('filter_closed');
+		$(document).click(function(e) {
+			$('#speciesfilter').addClass('filter_closed');
 			$('#speciesfilter').removeClass('filter_open');
 		});
 	</script>

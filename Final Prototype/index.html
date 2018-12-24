@@ -58,18 +58,6 @@
 		function filter_clicked_primates(cb) {
 			this.mapManager.filter_clicked_primates(cb);
 		}
-
-		function playAudio() {
-			var button = document.getElementById('audiobutton');
-			if (button.textContent == "Stop") {
-				button.textContent = "Play";
-				document.getElementById('audio').pause();
-			}
-			else {
-				document.getElementById('audio').play();
-				button.textContent = "Stop";
-			}
-		}
     </script>
 </head>
 <body>

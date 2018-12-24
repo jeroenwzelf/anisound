@@ -812,27 +812,61 @@ MarkerClusterer.prototype.createClusters_ = function() {
 }
 
 MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
+  google.maps.event.clearListeners(infoWindow, 'domready');
+  google.maps.event.addListener(infoWindow,'domready', function() {
+    // set titlebar background color
+    document.getElementById("iw-titleid").style.backgroundColor = getSpeciesColor(infoWindow.marker.type);
+
+    // set audio ended eventlistener
+    document.getElementById('audio').addEventListener('ended', function() {
+      btn.addClass("paused");
+    });
+
+    // set play button clicklistener
+    $('#audiobutton').click(function(e) {
+      if (document.getElementById('audio').paused) {
+        $('#audiobutton').addClass("paused");
+        document.getElementById('audio').play();
+      }
+      else {
+        $('#audiobutton').removeClass("paused");
+        document.getElementById('audio').pause();
+      }
+      return false;
+    });
+  });
+
   for (var i = 0, marker; marker = this.markers_[i]; i++) {
     google.maps.event.clearListeners(this.markers_[i], 'click');  // clearing old marker onclick events
     marker.addListener('click', function() {
-        var contentString = '<div id="content">'+
-        '<h1 id="firstHeading" class="firstHeading">' + this.name_en + '</h1>'+
-        '<div id="bodyContent">'+
-          '(' + this.name_la + ') </br>'+
-          this.loc + ', ' + this.country + ' </br>'+
-        '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/wav"></audio>'+
-        '<button id="audiobutton" onclick="playAudio()" type="button">Stop</button>'+
-        '</div>'+
+        var contentString =
+        '<div id="iw-container">'+
+          '<div id="iw-titleid" class="iw-title">'+
+            this.name_en+
+            '<button id="audiobutton" class="button paused" type="button"></button>'+
+          '</div>' +
+          '<div class="iw-content">' +
+            '<div class="iw-subTitle">' + this.name_la + '</div>' +
+            '<img id="entryImg" alt="(Loading image of ' + this.name_en + ')" height="115">' +
+            '<p>' + this.loc + ', ' + this.country + '</p>' +
+            '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/wav"></audio>'+
+          '</div>' +
         '</div>';
 
         infoWindow.setContent(contentString);
         infoWindow.open(this.getMap(), this);
+        infoWindow.marker = this;
 
-        setTimeout(function () {
-          document.getElementById('audio').addEventListener('ended', function() {
-            document.getElementById('audiobutton').textContent = 'Play';
-          });
-        }, 50);
+        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+        {
+            tags: this.name_la,
+            tagmode: "any",
+            format: "json"
+        },
+        function(data) {
+            var image_src = data.items[0]['media']['m'].replace("_m", "_b");
+            document.getElementById("entryImg").src = image_src;
+        });
     });
   }
 }

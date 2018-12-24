@@ -12,8 +12,10 @@
 	[ ] Implement what happens when API request limit is reached
 	[ ] Implement updating data
 	[ ] Replace sampledata with new system
+
+
 [ ] Make a new GoogleMaps Style in styledMap.js
 	[ ] Make style in SnazzyMaps
 [ ] Make the popup window
 	[ ] Style it
-	[ ] Put google image API in popup first google image of entry name
+	[x] Put google image API in popup first google image of entry name

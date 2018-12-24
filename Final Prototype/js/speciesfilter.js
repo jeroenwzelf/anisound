@@ -53,6 +53,7 @@ class MapManager {
 	    	loc: dataEntry.loc,
 	    	url: dataEntry.url,
 	    	icon: dataEntry.ico,
+	    	animation: google.maps.Animation.DROP,
 	        position: new google.maps.LatLng(dataEntry.latitude,
 		    	dataEntry.longitude),
 	        icon: this.getMarkerIcon(dataEntry)

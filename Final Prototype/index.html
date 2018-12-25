@@ -124,7 +124,7 @@
 		</a>
 	</div>
 	<div id="map"></div>
-	<div id="popUp">
+	<div id="popUp" class="popUpClosed">
 	    <div id="close" class="close"><i class="fa fa-times"></i></div>
 	    <div id="new"><span>ABOUT</span></div>
 	    <h2><strong>Anisound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that focusses on the Human Computer Interaction aspect of data interfaces. This application visualizes animal data from online databases in a topographical way.<br/><br/>
@@ -133,19 +133,15 @@
   	</div>
 	</body>
 
-	<!-- Opening and cosing species filter -->
+	<!-- Opening and closing windows (species filter, about popup) -->
 	<script type="text/javascript">
 		$("#openAboutButton").click(function(e) {
-		  $("#popUp").css("margin-top", "-200px");
-		  e.stopPropagation();
-		});
-
-		$("#popUp").click(function(e) {
+			$("#popUp").removeClass("popUpClosed");
 			e.stopPropagation();
 		});
 
 		$("#close").click(function(e) {
-			$("#popUp").css("margin-top", "-1600px");
+			$("#popUp").addClass("popUpClosed");
 		});
 
 		$('#openSpeciesFilterButton').click(function(e) {
@@ -163,10 +159,14 @@
 			e.stopPropagation();
 		});
 
+		$("#popUp").click(function(e) {
+			e.stopPropagation();
+		});
+
 		$(document).click(function(e) {
 			$('#speciesfilter').addClass('filter_closed');
 			$('#speciesfilter').removeClass('filter_open');
-			$("#popUp").css("margin-top", "-800px");
+			$("#popUp").addClass("popUpClosed");
 		});
 	</script>
 </html>

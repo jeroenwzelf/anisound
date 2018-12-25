@@ -52,7 +52,6 @@ class MapManager {
 	    	country: dataEntry.cnt,
 	    	loc: dataEntry.loc,
 	    	url: dataEntry.url,
-	    	icon: dataEntry.ico,
 	    	animation: google.maps.Animation.DROP,
 	        position: new google.maps.LatLng(dataEntry.latitude,
 		    	dataEntry.longitude),
@@ -101,7 +100,7 @@ class MapManager {
 	}
 
 	getMarkerIcon(dataEntry) {
-		var width = 50; var height = 50; var radius = 20; var imgscale = 20;
+		var width = 50; var height = 50; var radius = 20; var imgscale = 15;
 		var canvas, context;
 
 		// Creating canvas
@@ -116,7 +115,7 @@ class MapManager {
 		// Create colored circle
 		context.fillStyle = "rgba(255, 255, 255, 1)";
 		context.strokeStyle = getSpeciesColor(dataEntry.type);
-		context.lineWidth=3;
+		context.lineWidth = 4;
 		context.beginPath();
 		context.arc(width/2, height/2, radius, 0, 2*Math.PI);
 		context.closePath();
@@ -132,8 +131,8 @@ class MapManager {
 
 function getSpeciesColor(species) {
 	switch (species) {
-		case "birds": 		return "rgba(255, 0, 0, 1)";
-		case "felines": 	return "rgba(0, 255, 0, 1)";
-		case "primates": 	return "rgba(0, 0, 255, 1)";
+		case "birds": 		return "rgba(198, 200,   0, 1)";
+		case "felines": 	return "rgba(235,  63, 119, 1)";
+		case "primates": 	return "rgba( 50, 208,  52, 1)";
 	}
 }

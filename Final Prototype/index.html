@@ -61,9 +61,9 @@
     </script>
 </head>
 <body>
-	<img id="birds" src="images/birds.png" style="display:none" onload="wait_for_loading()">
-    <img id="felines" src="images/felines.png" style="display:none" onload="wait_for_loading()">
-    <img id="primates" src="images/felines.png" style="display:none" onload="wait_for_loading()">
+	<img id="birds" src="images/markers/animals/birds.png" style="display:none" onload="wait_for_loading()">
+    <img id="felines" src="images/markers/animals/felines.png" style="display:none" onload="wait_for_loading()">
+    <img id="primates" src="images/markers/animals/primates.png" style="display:none" onload="wait_for_loading()">
 	<!-- Sidebar -->
 	<div class="w3-sidebar w3-bar-block filter_closed" id="speciesfilter">
 		<button id="closeSpeciesFilterButton" class="w3-bar-item w3-button w3-large">Close &times;</button>
@@ -117,12 +117,36 @@
 			<i class="fa fa-bars"></i>
 			<span>Species filter</span>
 		</a>
+		<a id="openAboutButton" style="float: right;" href="javascript:void(0)">
+			<img src="images/logo/logo_medium_border.png" height="48">
+			<!-- <span>AniSound</span> -->
+		</a>
 	</div>
 	<div id="map"></div>
+	<div id="popUp">
+	    <div id="close" class="close"><i class="fa fa-times"></i></div>
+	    <div id="new"><span>ABOUT</span></div>
+	    <h2><strong>Anisound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that focusses on the Human Computer Interaction aspect of data interfaces. This application visualizes animal data from online databases in a topographical way.<br/><br/>
+	    This project has been written in <em>HTML+JavaScript</em> and is available as open-source software on its GitHub page.</h2><br>
+	    <a href="https://github.com/jeroenwzelf/anisound" target="_blank" class="aboutbutton">Visit Page</a>
+  	</div>
 	</body>
 
 	<!-- Opening and cosing species filter -->
 	<script type="text/javascript">
+		$("#openAboutButton").click(function(e) {
+		  $("#popUp").css("margin-top", "-200px");
+		  e.stopPropagation();
+		});
+
+		$("#popUp").click(function(e) {
+			e.stopPropagation();
+		});
+
+		$("#close").click(function(e) {
+			$("#popUp").css("margin-top", "-800px");
+		});
+
 		$('#openSpeciesFilterButton').click(function(e) {
 			e.stopPropagation();
 			$('#speciesfilter').removeClass('filter_closed');
@@ -141,6 +165,7 @@
 		$(document).click(function(e) {
 			$('#speciesfilter').addClass('filter_closed');
 			$('#speciesfilter').removeClass('filter_open');
+			$("#popUp").css("margin-top", "-800px");
 		});
 	</script>
 </html>

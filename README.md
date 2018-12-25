@@ -1,6 +1,3 @@
 # Anisound
-A Leiden University project focussing on Human Computer Interaction.
-
-## Running the project:
-1. Download this Git repository.
-2. Open Prototype1.1/index.html
+<p><strong>Anisound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that focusses on the Human Computer Interaction aspect of data interfaces. This application visualizes animal data from online databases in a topographical way.<br/><br/>
+	    This project has been written in <em>HTML+JavaScript</em> and is available as open-source software on this GitHub page.</p><br>

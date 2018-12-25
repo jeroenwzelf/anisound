@@ -199,7 +199,7 @@ function MarkerClusterer(map, data, opt_markers, opt_options) {
  * @type {string}
  * @private
  */
-MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = 'images/m';
+MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = 'images/markers/clusters/m';
 
 
 /**
@@ -864,7 +864,8 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
             format: "json"
         },
         function(data) {
-            var image_src = data.items[0]['media']['m'].replace("_m", "_b");
+            var rnd = Math.floor(Math.random() * data.items.length);
+            var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
             document.getElementById("entryImg").src = image_src;
         });
     });

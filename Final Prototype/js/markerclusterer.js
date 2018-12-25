@@ -866,6 +866,7 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
         function(data) {
             var rnd = Math.floor(Math.random() * data.items.length);
             var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
+            alert(image_src);
             document.getElementById("entryImg").src = image_src;
         });
     });

@@ -1,3 +1,5 @@
+// add map and markerclusterer here
+
 function getXenoCantoEntries(bounds) {
 	var xeno_canto_endpoint = "https://www.xeno-canto.org/api/2/recordings";
 	var SW = bounds.getSouthWest();
@@ -11,21 +13,23 @@ function getXenoCantoEntries(bounds) {
         var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
         document.getElementById("entryImg").src = image_src;
     });*/
-    var query = {
-    	box: SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng()
-    };
 
-    var xmlhttp = new XMLHttpRequest();
+    alert(nigga);
+    /*var xmlhttp = new XMLHttpRequest();
 	var url = xeno_canto_endpoint + query;
 
 	xmlhttp.onreadystatechange = function() {
+		var markers = [];
 	    if (this.readyState == 4 && this.status == 200) {
-	        var myArr = JSON.parse(this.responseText);
-	        alert(myArr);
+	        var ResponseData = JSON.parse(this.responseText);
+	        for (var i = 0; i < ResponseData.numRecordings / numPages; i++) {
+	        	//markers.push(getMarkerFromJson(ResponseData.recordings[i]));
+	        }
+	        
 	    }
 	};
 	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
+	xmlhttp.send();*/
 }
 
 function getBirds() {
@@ -104,20 +108,20 @@ function getMarkerFromJson(dataEntry) {
 }
 
 class EntryManager {
-	constructor(mapstyle) {
+	constructor(mapstyle, markerCluster) {
 		var center = new google.maps.LatLng(37.4419, -122.1419);
 		this.map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 3,
 			center: center,
-			mapTypeId: [ google.maps.MapTypeId.ROADMAP, 'styled_map' ]
+			mapTypeId: 'styled_map'
 		});
 		this.map.mapTypes.set('styled_map', mapstyle);
 		this.map.setMapTypeId('styled_map');
 
 		google.maps.event.addListenerOnce(this.map, 'bounds_changed', function() {
-			alert(this.bounds_changed_happened_it);
 			var markers = [];
-			markers = markers.concat(getXenoCantoEntries(this.getBounds()), getBirds(), getFelines(), getPrimates());
+			//markers = markers.concat(getXenoCantoEntries(this.getBounds()), getBirds(), getFelines(), getPrimates());
+			getXenoCantoEntries(this.getBounds());
 			this.markerCluster = new MarkerClusterer(this, data, markers);
 		});
 	}

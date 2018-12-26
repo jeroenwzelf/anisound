@@ -30,7 +30,7 @@
 	<!-- anisound scripts -->
     <script type="text/javascript" src="sampledata/xeno-canto_sample.json"></script>
     <script type="text/javascript" src="js/markerclusterer.js"></script>
-    <script type="text/javascript" src="js/speciesfilter.js"></script>
+    <script type="text/javascript" src="js/entrymanager.js"></script>
     <script type="text/javascript" src="js/styledMap.js"></script>
 	<link rel="stylesheet" type="text/css" href="cs/style.css">
 
@@ -47,17 +47,17 @@
 			document.getElementById("colordiv_felines").style.borderLeftColor = getSpeciesColor("felines");
 			document.getElementById("colordiv_primates").style.borderLeftColor = getSpeciesColor("primates");
 
-			this.mapManager = new MapManager(getStyledMap());
+			this.entryManager = new EntryManager(getStyledMap());
 		}
 
 		function filter_clicked_birds(cb) {
-			this.mapManager.filter_clicked_birds(cb);
+			this.entryManager.filter_clicked_birds(cb);
 		}
 		function filter_clicked_felines(cb) {
-			this.mapManager.filter_clicked_felines(cb);
+			this.entryManager.filter_clicked_felines(cb);
 		}
 		function filter_clicked_primates(cb) {
-			this.mapManager.filter_clicked_primates(cb);
+			this.entryManager.filter_clicked_primates(cb);
 		}
     </script>
 </head>
@@ -129,7 +129,7 @@
 	    <div id="new"><span>ABOUT</span></div>
 	    <h2><strong>Anisound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that focusses on the Human Computer Interaction aspect of data interfaces. This application visualizes animal data from online databases in a topographical way.<br/><br/>
 	    This project has been written in <em>HTML+JavaScript</em> and is available as open-source software on its GitHub page.</h2><br>
-	  	<p style="margin: -10px 0 0 10px; display: left; color: silver; font-size: 12px;">AniSound: v2.2.1</p>
+	  	<p style="margin: -10px 0 0 10px; display: left; color: silver; font-size: 12px;">AniSound: v2.2.2</p>
 	    <a href="https://github.com/jeroenwzelf/anisound" target="_blank" class="aboutbutton">Visit Page</a>
   	</div>
 	</body>

@@ -803,6 +803,7 @@ MarkerClusterer.prototype.createClusters_ = function() {
 
   for (var i = 0, marker; marker = this.markers_[i]; i++) {
     if (!marker.isAdded && this.isMarkerInBounds_(marker, bounds)) {  
+      if (this.infoWindow.anchor == marker) this.infoWindow.close();
       this.addToClosestCluster_(marker);
     }
     else {

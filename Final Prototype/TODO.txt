@@ -4,7 +4,7 @@
 [x] popup needs to close when clicking somewhere else
 [x] filter needs to close when clicking somewhere else
 [x] species color change
-[ ] when marker is grouped in a cluster, the infowindow needs to close
+[x] when marker is grouped in a cluster, the infowindow needs to close
 [ ] Set up Google Billing to get rid of 'For development purposes only' map
 	[ ] Get credit card
 	[ ] Link credit card in Google Developer Console

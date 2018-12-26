@@ -5,6 +5,8 @@
 [x] filter needs to close when clicking somewhere else
 [x] species color change
 [x] when marker is grouped in a cluster, the infowindow needs to close
+[x] filter needs to scale correctly
+[x] images don't load in github pages
 [ ] Set up Google Billing to get rid of 'For development purposes only' map
 	[ ] Get credit card
 	[ ] Link credit card in Google Developer Console

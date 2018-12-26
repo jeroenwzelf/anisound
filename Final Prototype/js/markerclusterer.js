@@ -858,7 +858,7 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
         infoWindow.open(this.getMap(), this);
         infoWindow.marker = this;
 
-        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+        $.getJSON("https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
         {
             tags: this.name_la,
             tagmode: "any",
@@ -867,7 +867,6 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
         function(data) {
             var rnd = Math.floor(Math.random() * data.items.length);
             var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
-            alert(image_src);
             document.getElementById("entryImg").src = image_src;
         });
     });

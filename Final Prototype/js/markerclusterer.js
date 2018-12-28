@@ -840,7 +840,6 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow, marker)
 
     google.maps.event.clearListeners(marker, 'click');  // clearing old marker onclick events
     marker.addListener('click', function() {
-        alert(this.url);
         var contentString =
         '<div id="iw-container">'+
           '<div id="iw-titleid" class="iw-title">'+

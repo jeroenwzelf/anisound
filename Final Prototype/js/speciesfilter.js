@@ -1,17 +1,63 @@
+var bounds_inited = false;
+var map;
+var markerCluster;
+
+function getXenoCantoEntries() {
+	var bounds = map.getBounds();
+	var xeno_canto_endpoint = "http://www.xeno-canto.org/api/2/recordings";
+	var SW = bounds.getSouthWest();
+	var NE = bounds.getNorthEast();
+	var query = "?query=box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng();
+	
+	$.get("php/CORS.php", { query: "box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng() }, function (data) {
+		alert( "CORS.php: " + data );
+	}, "json");
+
+	/*$.ajax({
+		headers: { "Accept": "application/json"},
+		type: 'GET',
+		url: xeno_canto_endpoint + query,
+		crossDomain: true,
+		beforeSend: function(xhr){
+			xhr.withCredentials = true;
+		},
+		success: function(data, textStatus, request){
+			alert(JSON.stringify(data, null, 2));
+        }
+ 	});*/
+
+	$.getJSON(xeno_canto_endpoint + query, {},
+    function(data) {
+    	alert("getJSON: " + JSON.stringify(data, null, 2));
+        //var rnd = Math.floor(Math.random() * data.items.length);
+        //var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
+        //document.getElementById("entryImg").src = image_src;
+    });
+}
+
 class MapManager {
 	constructor(mapstyle) {
 		var center = new google.maps.LatLng(37.4419, -122.1419);
-		this.map = new google.maps.Map(document.getElementById('map'), {
+		map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 3,
 			center: center,
-			mapTypeId: [ google.maps.MapTypeId.ROADMAP, 'styled_map' ]
+			mapTypeId: 'styled_map'
 		});
-		this.map.mapTypes.set('styled_map', mapstyle);
-		this.map.setMapTypeId('styled_map');
+		map.mapTypes.set('styled_map', mapstyle);
+		map.setMapTypeId('styled_map');
 
 		var markers = [];
 		markers = markers.concat(this.getBirds(), this.getFelines(), this.getPrimates());
-		this.markerCluster = new MarkerClusterer(this.map, data, markers);
+		markerCluster = new MarkerClusterer(map, data, markers);
+
+		google.maps.event.clearListeners(map, 'bounds_changed');
+		google.maps.event.addDomListener(map, 'bounds_changed', function() {
+			google.maps.event.clearListeners(map, 'bounds_changed');
+			if (!bounds_inited) {
+				bounds_inited = true;
+				getXenoCantoEntries();
+			}
+        });
 	}
 
 	getBirds() {
@@ -62,12 +108,12 @@ class MapManager {
 
 	filter_clicked_birds(cb) {
 		if (cb.checked) {
-			this.markerCluster.addMarkers(this.getBirds());
+			markerCluster.addMarkers(this.getBirds());
 		}
 		else {
-			for (var i = 0, marker; marker = this.markerCluster.getMarkers()[i]; i++) {
+			for (var i = 0, marker; marker = markerCluster.getMarkers()[i]; i++) {
 				if (marker.type == 'birds') {
-					if (this.markerCluster.removeMarker(marker)) i--;
+					if (markerCluster.removeMarker(marker)) i--;
 				}
 			}
 		}
@@ -75,12 +121,12 @@ class MapManager {
 
 	filter_clicked_felines(cb) {
 		if (cb.checked) {
-			this.markerCluster.addMarkers(this.getFelines());
+			markerCluster.addMarkers(this.getFelines());
 		}
 		else {
-			for (var i = 0, marker; marker = this.markerCluster.getMarkers()[i]; i++) {
+			for (var i = 0, marker; marker = markerCluster.getMarkers()[i]; i++) {
 				if (marker.type == 'felines') {
-					if (this.markerCluster.removeMarker(marker)) i--;
+					if (markerCluster.removeMarker(marker)) i--;
 				}
 			}
 		}
@@ -88,12 +134,12 @@ class MapManager {
 
 	filter_clicked_primates(cb) {
 		if (cb.checked) {
-			this.markerCluster.addMarkers(this.getPrimates());
+			markerCluster.addMarkers(this.getPrimates());
 		}
 		else {
-			for (var i = 0, marker; marker = this.markerCluster.getMarkers()[i]; i++) {
+			for (var i = 0, marker; marker = markerCluster.getMarkers()[i]; i++) {
 				if (marker.type == 'primates') {
-					if (this.markerCluster.removeMarker(marker)) i--;
+					if (markerCluster.removeMarker(marker)) i--;
 				}
 			}
 		}

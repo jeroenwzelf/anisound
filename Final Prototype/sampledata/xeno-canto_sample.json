@@ -7,9 +7,9 @@ var data = {
 			"type": "felines",
 			"loc": "Parabara savannah",
 			"cnt": "Guyana",
-			"url": "sampledata/sounds/Jaguar.mp3",
-			"longitude": -59.253267, 
-			"latitude": 2.275797
+			"file": "sampledata/sounds/Jaguar.mp3",
+			"lng": -59.253267, 
+			"lat": 2.275797
 		},
 		{	"en": "Lion",
 			"gen": "Panthera",
@@ -17,9 +17,9 @@ var data = {
 			"type": "felines",
 			"loc": "Ruaha National Park, Iringa",
 			"cnt": "Tanzania",
-			"url": "sampledata/sounds/Lion.mp3",
-			"longitude": 34.475310,
-			"latitude": -7.432177
+			"file": "sampledata/sounds/Lion.mp3",
+			"lng": 34.475310,
+			"lat": -7.432177
 		},
 		{	"en": "Ring-tailed Lemur",
 			"gen": "Lemur",
@@ -27,9 +27,9 @@ var data = {
 			"type": "primates",
 			"loc": "Berenty Reserve, Toliara",
 			"cnt": "Madagascar",
-			"url": "sampledata/sounds/RING-TAILEDLemur.mp3",
-			"longitude": 46.144841,
-			"latitude": -25.067715
+			"file": "sampledata/sounds/RING-TAILEDLemur.mp3",
+			"lng": 46.144841,
+			"lat": -25.067715
 		},
 		{	"en": "Sumatran Orangutan",
 			"gen": "Pongo",
@@ -37,9 +37,9 @@ var data = {
 			"type": "primates",
 			"loc": "Mekar Tani, Mendawai",
 			"cnt": "Indonesia",
-			"url": "sampledata/sounds/Orangutan.mp3",
-			"longitude": 113.394218,
-			"latitude": -2.920695
+			"file": "sampledata/sounds/Orangutan.mp3",
+			"lng": 113.394218,
+			"lat": -2.920695
 		},
 		{	"en": "Somali Ostrich",
 			"gen": "Struthio",
@@ -47,9 +47,9 @@ var data = {
 			"type": "birds",
 			"loc": "Aledeghe WIldlife Reserve",
 			"cnt": "Ethiopia",
-			"url": "sampledata/sounds/XC292043-Somali Ostrich2015-11-9-1.mp3",
-			"longitude": 40.4529,
-			"latitude": 9.4529
+			"file": "sampledata/sounds/XC292043-Somali Ostrich2015-11-9-1.mp3",
+			"lng": 40.4529,
+			"lat": 9.4529
 		},
 		{	"en": "Greater Rhea",
 			"gen": "Rhea",
@@ -57,9 +57,9 @@ var data = {
 			"type": "birds",
 			"loc": "Pouso Alegre, Mato Grosso",
 			"cnt": "Brazil",
-			"url": "sampledata/sounds/XC191451-LS114319 Greater Rhea Hoyer.mp3",
-			"longitude": -56.7451,
-			"latitude": -16.5034
+			"file": "sampledata/sounds/XC191451-LS114319 Greater Rhea Hoyer.mp3",
+			"lng": -56.7451,
+			"lat": -16.5034
 		},
 		{	"en": "White-throated Tinamou",
 			"gen": "Tinamus",
@@ -67,9 +67,9 @@ var data = {
 			"type": "birds",
 			"loc": "Parque Nacional da Amazônia",
 			"cnt": "Brazil",
-			"url": "sampledata/sounds/CERCNR10.mp3",
-			"longitude": -56.3001,
-			"latitude": -4.5167 
+			"file": "sampledata/sounds/CERCNR10.mp3",
+			"lng": -56.3001,
+			"lat": -4.5167 
 		},
 		{	"en": "Highland Tinamou",
 			"gen": "Nothocercus",
@@ -77,9 +77,9 @@ var data = {
 			"type": "birds",
 			"loc": "Reserva Natural Mesenia - Paramillo",
 			"cnt": "Colombia",
-			"url": "sampledata/sounds/Nothocecus bonaparttet.mp3",
-			"longitude": -75.8959,
-			"latitude": 5.4828 
+			"file": "sampledata/sounds/Nothocecus bonaparttet.mp3",
+			"lng": -75.8959,
+			"lat": 5.4828 
 		},
 		{	"en": "Tawny-breasted Tinamou",
 			"gen": "Nothocercus",
@@ -87,9 +87,9 @@ var data = {
 			"type": "birds",
 			"loc": "Carchi: Páramo El Angel 3 km SE El Moran",
 			"cnt": "Ecuador",
-			"url": "sampledata/sounds/XC238667-Nothocercus_julius07cut2B.mp3",
-			"longitude": -78.037,
-			"latitude": 0.748 
+			"file": "sampledata/sounds/XC238667-Nothocercus_julius07cut2B.mp3",
+			"lng": -78.037,
+			"lat": 0.748 
 		},
 		{	"en": "Southern Brown Kiwi",
 			"gen": "Apteryx",
@@ -97,9 +97,9 @@ var data = {
 			"type": "birds",
 			"loc": "Ocean beach, Stewart Isl…and District, Southland",
 			"cnt": "New Zealand",
-			"url": "sampledata/sounds/XC389022-kiwi.mp3",
-			"longitude": 168.1768,
-			"latitude": -46.9705
+			"file": "sampledata/sounds/XC389022-kiwi.mp3",
+			"lng": 168.1768,
+			"lat": -46.9705
 		},
 		{	"en": "Southern Cassowary",
 			"gen": "Casuarius",
@@ -107,9 +107,9 @@ var data = {
 			"type": "birds",
 			"loc": "Lake Eacham, Queensland",
 			"cnt": "Australia",
-			"url": "sampledata/sounds/XC158488-2011110205_1841_Casuarius casuarius_chant_FD.mp3",
-			"longitude": 145.6175,
-			"latitude": -17.2834
+			"file": "sampledata/sounds/XC158488-2011110205_1841_Casuarius casuarius_chant_FD.mp3",
+			"lng": 145.6175,
+			"lat": -17.2834
 		}
 	]
 }

@@ -807,12 +807,12 @@ MarkerClusterer.prototype.createClusters_ = function() {
       this.addToClosestCluster_(marker);
     }
     else {
-      this.addPopupWindowListeners(this.infoWindow);
+      this.addPopupWindowListeners(this.infoWindow, this.markers_[i]);
     }
   }
 }
 
-MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
+MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow, marker) {
   google.maps.event.clearListeners(infoWindow, 'domready');
   google.maps.event.addListener(infoWindow,'domready', function() {
     // set titlebar background color
@@ -837,9 +837,10 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
     });
   });
 
-  for (var i = 0, marker; marker = this.markers_[i]; i++) {
-    google.maps.event.clearListeners(this.markers_[i], 'click');  // clearing old marker onclick events
+
+    google.maps.event.clearListeners(marker, 'click');  // clearing old marker onclick events
     marker.addListener('click', function() {
+        alert(this.url);
         var contentString =
         '<div id="iw-container">'+
           '<div id="iw-titleid" class="iw-title">'+
@@ -850,7 +851,7 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
             '<div class="iw-subTitle">' + this.name_la + '</div>' +
             '<img id="entryImg" alt="(Loading image of ' + this.name_en + ')" height="115">' +
             '<p>' + this.loc + ', ' + this.country + '</p>' +
-            '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/wav"></audio>'+
+            '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/mpeg"></audio>'+
           '</div>' +
         '</div>';
 
@@ -870,7 +871,6 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow) {
             document.getElementById("entryImg").src = image_src;
         });
     });
-  }
 }
 
 /**
@@ -923,6 +923,12 @@ Cluster.prototype.isMarkerAlreadyAdded = function(marker) {
 Cluster.prototype.addMarker = function(marker) {
   if (this.isMarkerAlreadyAdded(marker)) {
     return false;
+  }
+
+  for (var i = 0; i < this.markers_.length; i++) {
+    if (marker.position.lat == this.markers_[i].position.lat
+      && marker.position.lng == this.markers_[i].position.lng)
+      return false;
   }
 
   if (!this.center_) {

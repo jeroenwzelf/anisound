@@ -7,16 +7,18 @@
 [x] when marker is grouped in a cluster, the infowindow needs to close
 [x] filter needs to scale correctly
 [x] images don't load in github pages
+
+
 [ ] restrict google API key to https://jeroenwzelf.github.io/*
-[ ] Set up Google Billing to get rid of 'For development purposes only' map
-	[ ] Get credit card
-	[ ] Link credit card in Google Developer Console
+[x] Set up Google Billing to get rid of 'For development purposes only' map
+	[x] Get credit card
+	[x] Link credit card in Google Developer Console
 [ ] Make system that gets real entries from online database api's and replace it with the sampledata
-	[ ] Find out easiest way to get lots of data, fast, with minimal amount of requests
-	[ ] Implement querying requests and saving the data
+	[x] Implement querying requests and saving the data
 	[ ] Implement what happens when API request limit is reached
-	[ ] Implement updating data
-	[ ] Replace sampledata with new system
+	[x] Replace sampledata with new system
+	[ ] Entries at thesame location cannot be viewed as they are forever in a cluster
+	[x] fix that soundfiles can be played
 
 
 [ ] Make a new GoogleMaps Style in styledMap.js

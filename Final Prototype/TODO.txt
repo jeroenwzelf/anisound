@@ -20,7 +20,7 @@
 	[ ] Entries at thesame location cannot be viewed as they are forever in a cluster (remove same location enries?)
 	[ ] ? Download a list of entry locations for xeno canto so that it loads faster
 	[x] fix that soundfiles can be played
-	[ ] fix fucking CORS header problem
+	[x] fix fucking CORS header problem
 
 
 [ ] Make a new GoogleMaps Style in styledMap.js

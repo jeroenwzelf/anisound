@@ -1,4 +1,5 @@
-var xeno_canto_endpoint = "https://www.xeno-canto.org/api/2/recordings";
+var CORS_PROXY = "https://cors.io/?"
+var XC_ENDPOINT = "https://www.xeno-canto.org/api/2/recordings";
 var PAGE_LIMIT = 5;
 var pages_loaded;
 
@@ -19,9 +20,8 @@ function httpGetAsync(url, callback) {
 
 // gets all entries from page
 function getXenoCantoPages(query, page) {
-	httpGetAsync(xeno_canto_endpoint + query + "&page=" + page, function(data) {
+	httpGetAsync(CORS_PROXY + XC_ENDPOINT + query + "&page=" + page, function(data) {
 		if (page < data.numPages && pages_loaded < PAGE_LIMIT) {
-			alert("getting page " + page)
 			var markers = [];
 			// save current page
 			for (var i=0; i < data.recordings.length; i++) {
@@ -33,8 +33,7 @@ function getXenoCantoPages(query, page) {
 
 			pages_loaded++;
 			// get random other page
-			var rnd;
-			while ((rnd = Math.floor(Math.random() * data.numPages)) == page);
+			var rnd; while ((rnd = Math.floor(Math.random() * data.numPages)) == page);
 			getXenoCantoPages(query, rnd);
 		}
 	});

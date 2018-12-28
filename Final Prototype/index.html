@@ -33,29 +33,28 @@
 	<link rel="stylesheet" type="text/css" href="cs/style.css">
 
     <script type="text/javascript">
+    	var loaded = 0;
+
     	function wait_for_loading() {
-    		if (document.getElementById("birds").complete
-    			&& document.getElementById("felines").complete
-    			&& document.getElementById("primates").complete)
-    			init();
+    		loaded++;
+    		if (loaded == 3) init();
     	}
 
 		function init() {
+			init_map(getStyledMap());
 			document.getElementById("colordiv_birds").style.borderLeftColor = getSpeciesColor("birds");
 			document.getElementById("colordiv_felines").style.borderLeftColor = getSpeciesColor("felines");
 			document.getElementById("colordiv_primates").style.borderLeftColor = getSpeciesColor("primates");
-
-			this.mapManager = new MapManager(getStyledMap());
 		}
 
 		function filter_clicked_birds(cb) {
-			this.mapManager.filter_clicked_birds(cb);
+			filter_clicked_birds(cb);
 		}
 		function filter_clicked_felines(cb) {
-			this.mapManager.filter_clicked_felines(cb);
+			filter_clicked_felines(cb);
 		}
 		function filter_clicked_primates(cb) {
-			this.mapManager.filter_clicked_primates(cb);
+			filter_clicked_primates(cb);
 		}
     </script>
 </head>

@@ -114,7 +114,8 @@ function init_map(mapstyle) {
 	map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 3,
 		center: center,
-		mapTypeId: 'styled_map'
+		mapTypeId: 'styled_map',
+		mapTypeControl: false
 	});
 	map.mapTypes.set('styled_map', mapstyle);
 	map.setMapTypeId('styled_map');

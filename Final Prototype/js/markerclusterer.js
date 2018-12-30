@@ -833,7 +833,7 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow, marker)
   google.maps.event.clearListeners(infoWindow, 'domready');
   google.maps.event.addListener(infoWindow,'domready', function() {
     // set titlebar background color
-    document.getElementById("iw-titleid").style.backgroundColor = getSpeciesColor(infoWindow.marker.type);
+    document.getElementById("EntryName").style.backgroundColor = getSpeciesColor(infoWindow.marker.type);
 
     // set audio ended eventlistener
     document.getElementById('audio').addEventListener('ended', function() {
@@ -857,19 +857,38 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow, marker)
 
     google.maps.event.clearListeners(marker, 'click');  // clearing old marker onclick events
     marker.addListener('click', function() {
+        var flag_api_endpoint = "https://restcountries.eu/rest/v2/name/";
+        httpGetAsync(flag_api_endpoint + marker.country, function(data) {
+          document.getElementById("EntryFlag").src = "https://www.countryflags.io/" + data[0].alpha2Code + "/shiny/64.png";
+        });
+        
         var contentString =
-        '<div id="iw-container">'+
-          '<div id="iw-titleid" class="iw-title">'+
-            this.name_en+
-            '<button id="audiobutton" class="button paused" type="button"></button>'+
-          '</div>' +
-          '<div class="iw-content">' +
-            '<div class="iw-subTitle">' + this.name_la + '</div>' +
-            '<img id="entryImg" alt="(Loading image of ' + this.name_en + ')" height="115">' +
-            '<p>' + this.loc + ', ' + this.country + '</p>' +
-            '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/mpeg"></audio>'+
-          '</div>' +
+        '<div id="container">'+
+          '<div id="EntryTop">'+
+            '<div id="EntryName">'+
+              '<span>' + this.name_en + '</span>'+
+            '</div>'+
+            '<div style="flex: auto"></div>'+
+            '<div id="EntryPlay">'+
+              '<button id="audiobutton" class="button paused" type="button"></button>'+
+            '</div>'+
+          '</div>'+
+          '<div id="EntrySub">'+
+            '<span>' + this.name_la + '</span>'+
+          '</div>'+
+          '<div id="EntryImgBox">'+
+            '<img id="EntryImg" alt="(Loading image of ' + this.name_en + ')" height="200">' +
+          '</div>'+
+          '<div id="EntryLocation">'+
+            '<img id="EntryFlag" height="20">'+
+            '<div id="EntryLoc">'+
+              '<span>' + this.loc + '</span>'+
+            '</div>'+
+          '</div>'+
+          '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/mpeg"></audio>'+
         '</div>';
+
+
 
         infoWindow.setContent(contentString);
         infoWindow.open(this.getMap(), this);
@@ -884,7 +903,7 @@ MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow, marker)
         function(data) {
             var rnd = Math.floor(Math.random() * data.items.length);
             var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
-            document.getElementById("entryImg").src = image_src;
+            document.getElementById("EntryImg").src = image_src;
         });
     });
 }

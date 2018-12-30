@@ -17,7 +17,7 @@
 
 [ ] restrict google API key to https://jeroenwzelf.github.io/*
 [ ] shrink github text in about page
-[ ] add clear search
+[x] add clear search
 [ ] Make system that gets real entries from online database api's and replace it with the sampledata
 	[x] Implement querying requests and saving the data
 	[x] Implement what happens when API request limit is reached
@@ -28,9 +28,8 @@
 [x] Make a new GoogleMaps Style in styledMap.js
 	[x] Make style in SnazzyMaps
 [ ] sign about page with our names
-[ ] Make the popup window
-	[ ] Style it
+[x] Make the popup window
+	[x] Style it
 	[x] Put google image API in popup first google image of entry name
-
-[ ] mobile phone style
-[ ] play button center better
+[x] mobile phone style
+[x] play button center better

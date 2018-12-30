@@ -9,6 +9,12 @@
 [x] images don't load in github pages
 [ ] support same location entries
 [x] add search bar
+[ ] mobile phone style
+[ ] sign about page with our names
+[ ] shrink github text in about page
+[ ] play button center better
+[ ] add clear search
+
 
 [ ] restrict google API key to https://jeroenwzelf.github.io/*
 [x] Set up Google Billing to get rid of 'For development purposes only' map

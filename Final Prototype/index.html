@@ -127,7 +127,7 @@
 	<div id="popUp" class="popUpClosed">
 	    <div id="close" class="close"><i class="fa fa-times"></i></div>
 	    <div id="new"><span>ABOUT</span></div>
-	    <h2><strong>Anisound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that focusses on the Human Computer Interaction aspect of data interfaces. This application visualizes animal data from online databases in a topographical way.<br/><br/>
+	    <h2><strong>Ani-Sound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that Interactive Information Displays. This application visualizes animal data from online databases in a topographical way.<br/><br/>
 	    This project has been written in <em>HTML+JavaScript</em> and is available as open-source software on its GitHub page.</h2><br>
 	  	<p style="margin: -10px 0 0 10px; display: left; color: silver; font-size: 12px;">AniSound: v2.2.8</p>
 	    <a href="https://github.com/jeroenwzelf/anisound" target="_blank" class="aboutbutton">Visit Page</a>
@@ -137,9 +137,7 @@
 	<!-- Opening and closing windows (species filter, about popup) -->
 	<script type="text/javascript">
 		$("#searchbar").keyup(function(event) {
-		    if (event.keyCode === 13) {
 		        markerCluster.filterOnString(this.value.toLowerCase());
-		    }
 		});
 
 		$("#openAboutButton").click(function(e) {

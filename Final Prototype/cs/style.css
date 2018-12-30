@@ -1,6 +1,6 @@
 /* -- TOP NAVIGATION BAR -- */
 
-@media (max-width: 450px) {
+@media (max-width: 400px) {
   .HideOnMicro {
     display: none !important;
   }

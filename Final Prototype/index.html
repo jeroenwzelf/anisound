@@ -113,14 +113,14 @@
 	<div class="topnav" id="myTopnav">
 		<a id="openSpeciesFilterButton" href="javascript:void(0);" class="icon">
 			<i class="fa fa-bars"></i>
-			<span>Species filter</span>
+			<span class="HideOnSmall" style="">Species filter</span>
 		</a>
-		<div style="width: 50%">
+		<div style="flex: auto;">
 		</div>
 		<a id="clearSearchIcon" style="background-color: #333 !important;" href="javascript:void(0)">
-			<span>&times;</span>
+			<span class="HideOnMicro">&times;</span>
 		</a>
-		<input style="height: 40px; display: block;" type="text" id="searchbar" placeholder="Search.." title="Type in a name">
+		<input class="HideOnMicro" style="height: 40px; display: block;" type="text" id="searchbar" placeholder="Search.." title="Type in a name">
 		<a id="openAboutButton" style="float: right;" href="javascript:void(0)">
 			<img src="images/logo/logo_medium_border.png" height="48">
 			<!-- <span>AniSound</span> -->

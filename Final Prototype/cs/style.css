@@ -1,5 +1,17 @@
 /* -- TOP NAVIGATION BAR -- */
 
+@media (max-width: 450px) {
+  .HideOnMicro {
+    display: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .HideOnSmall {
+    display: none !important;
+  }
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: #333;
@@ -54,6 +66,8 @@
 .filter_closed {
   left: -270px;
 }
+
+
 
 /* -- SPECIES FILTER CHECKBOX -- */
 .label-cbx {

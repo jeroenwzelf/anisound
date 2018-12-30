@@ -80,6 +80,7 @@ function MarkerClusterer(map, data, opt_markers, opt_options) {
    * @private
    */
   this.markers_ = [];
+  this.invisibleMarkers = [];
 
   /**
    *  @type {Array.<Cluster>}
@@ -810,6 +811,20 @@ MarkerClusterer.prototype.createClusters_ = function() {
       this.addPopupWindowListeners(this.infoWindow, this.markers_[i]);
     }
   }
+}
+
+MarkerClusterer.prototype.filterOnString = function(string) {
+  for (var i = 0, marker; marker = this.invisibleMarkers[i]; i++) {
+    this.markers_.push(marker);
+  }
+  this.invisibleMarkers = [];
+  for (var i = 0, marker; marker = this.markers_[i]; i++) {
+    if (!marker.name_en.toLowerCase().includes(string) && !marker.name_la.toLowerCase().includes(string)) {
+      this.removeMarker_(marker); i--;
+      this.invisibleMarkers.push(marker);
+    }
+  }
+  this.repaint();
 }
 
 MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow, marker) {

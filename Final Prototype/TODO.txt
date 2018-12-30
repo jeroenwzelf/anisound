@@ -7,7 +7,8 @@
 [x] when marker is grouped in a cluster, the infowindow needs to close
 [x] filter needs to scale correctly
 [x] images don't load in github pages
-
+[ ] support same location entries
+[x] add search bar
 
 [ ] restrict google API key to https://jeroenwzelf.github.io/*
 [x] Set up Google Billing to get rid of 'For development purposes only' map

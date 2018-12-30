@@ -30,6 +30,11 @@
     <script type="text/javascript" src="js/markerclusterer.js"></script>
     <script type="text/javascript" src="js/speciesfilter.js"></script>
     <script type="text/javascript" src="js/styledMap.js"></script>
+    <link
+    	rel="stylesheet"
+    	type="text/css"
+    	href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css"
+	/>
 	<link rel="stylesheet" type="text/css" href="cs/style.css">
 
     <script type="text/javascript">
@@ -123,6 +128,7 @@
 		<input class="HideOnMicro" style="height: 40px; width: 190px; display: block;" type="text" id="searchbar" placeholder="Search.." title="Type in a name">
 		<a id="openAboutButton" style="float: right;" href="javascript:void(0)">
 			<img src="images/logo/logo_medium_border.png" height="48">
+			<!-- <span>AniSound</span> -->
 		</a>
 	</div>
 	<div id="map"></div>
@@ -131,7 +137,7 @@
 	    <div id="new"><span>ABOUT</span></div>
 	    <h2><strong>Ani-Sound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that Interactive Information Displays. This application visualizes animal data from online databases in a topographical way.<br/><br/>
 	    This project has been written in <em>HTML+JavaScript</em> and is available as open-source software on its GitHub page.</h2><br>
-	  	<p style="margin: -10px 0 0 10px; display: left; color: silver; font-size: 12px;">AniSound: v2.2.9</p>
+	  	<p style="margin: -10px 0 0 10px; display: left; color: silver; font-size: 12px;">AniSound: v2.2.8</p>
 	    <a href="https://github.com/jeroenwzelf/anisound" target="_blank" class="aboutbutton">Visit Page</a>
   	</div>
 	</body>

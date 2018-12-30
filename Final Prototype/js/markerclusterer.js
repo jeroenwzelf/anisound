@@ -818,10 +818,12 @@ MarkerClusterer.prototype.filterOnString = function(string) {
     this.markers_.push(marker);
   }
   this.invisibleMarkers = [];
-  for (var i = 0, marker; marker = this.markers_[i]; i++) {
-    if (!marker.name_en.toLowerCase().includes(string) && !marker.name_la.toLowerCase().includes(string)) {
-      this.removeMarker_(marker); i--;
-      this.invisibleMarkers.push(marker);
+  if (string.length > 0) {
+    for (var i = 0, marker; marker = this.markers_[i]; i++) {
+      if (!marker.name_en.toLowerCase().includes(string) && !marker.name_la.toLowerCase().includes(string)) {
+        this.removeMarker_(marker); i--;
+        this.invisibleMarkers.push(marker);
+      }
     }
   }
   this.repaint();

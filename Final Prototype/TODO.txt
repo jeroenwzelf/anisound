@@ -7,31 +7,30 @@
 [x] when marker is grouped in a cluster, the infowindow needs to close
 [x] filter needs to scale correctly
 [x] images don't load in github pages
-[ ] support same location entries
 [x] add search bar
-[ ] mobile phone style
-[ ] sign about page with our names
-[ ] shrink github text in about page
-[ ] play button center better
-[ ] add clear search
-
-
-[ ] restrict google API key to https://jeroenwzelf.github.io/*
 [x] Set up Google Billing to get rid of 'For development purposes only' map
 	[x] Get credit card
 	[x] Link credit card in Google Developer Console
+
+
+
+
+[ ] restrict google API key to https://jeroenwzelf.github.io/*
+[ ] shrink github text in about page
+[ ] add clear search
 [ ] Make system that gets real entries from online database api's and replace it with the sampledata
 	[x] Implement querying requests and saving the data
-	[ ] Implement what happens when API request limit is reached
+	[x] Implement what happens when API request limit is reached
 	[x] Replace sampledata with new system
 	[ ] Entries at thesame location cannot be viewed as they are forever in a cluster (remove same location enries?)
-	[ ] ? Download a list of entry locations for xeno canto so that it loads faster
 	[x] fix that soundfiles can be played
 	[x] fix fucking CORS header problem
-
-
-[ ] Make a new GoogleMaps Style in styledMap.js
-	[ ] Make style in SnazzyMaps
+[x] Make a new GoogleMaps Style in styledMap.js
+	[x] Make style in SnazzyMaps
+[ ] sign about page with our names
 [ ] Make the popup window
 	[ ] Style it
 	[x] Put google image API in popup first google image of entry name
+
+[ ] mobile phone style
+[ ] play button center better

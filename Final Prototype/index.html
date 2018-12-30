@@ -115,8 +115,11 @@
 			<i class="fa fa-bars"></i>
 			<span>Species filter</span>
 		</a>
-		<div style="width: 60.89%">
+		<div style="width: 50%">
 		</div>
+		<a id="clearSearchIcon" style="background-color: #333 !important;" href="javascript:void(0)">
+			<span>&times;</span>
+		</a>
 		<input style="height: 40px; display: block;" type="text" id="searchbar" placeholder="Search.." title="Type in a name">
 		<a id="openAboutButton" style="float: right;" href="javascript:void(0)">
 			<img src="images/logo/logo_medium_border.png" height="48">
@@ -136,8 +139,14 @@
 
 	<!-- Opening and closing windows (species filter, about popup) -->
 	<script type="text/javascript">
-		$("#searchbar").keyup(function(event) {
-		        markerCluster.filterOnString(this.value.toLowerCase());
+		$("#clearSearchIcon").click(function(e) {
+			var searchbar = document.getElementById("searchbar");
+			searchbar.value = '';
+			markerCluster.filterOnString('');
+		});
+
+		$("#searchbar").keyup(function(e) {
+		    markerCluster.filterOnString(this.value.toLowerCase());
 		});
 
 		$("#openAboutButton").click(function(e) {

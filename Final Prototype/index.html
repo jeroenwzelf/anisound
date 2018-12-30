@@ -30,6 +30,11 @@
     <script type="text/javascript" src="js/markerclusterer.js"></script>
     <script type="text/javascript" src="js/speciesfilter.js"></script>
     <script type="text/javascript" src="js/styledMap.js"></script>
+    <link
+    	rel="stylesheet"
+    	type="text/css"
+    	href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css"
+	/>
 	<link rel="stylesheet" type="text/css" href="cs/style.css">
 
     <script type="text/javascript">
@@ -113,11 +118,14 @@
 	<div class="topnav" id="myTopnav">
 		<a id="openSpeciesFilterButton" href="javascript:void(0);" class="icon">
 			<i class="fa fa-bars"></i>
-			<span>Species filter</span>
+			<span class="HideOnSmall" style="">Species filter</span>
 		</a>
-		<div style="width: 60.89%">
+		<div style="flex: auto;">
 		</div>
-		<input style="height: 40px; display: block;" type="text" id="searchbar" placeholder="Search.." title="Type in a name">
+		<a id="clearSearchIcon" style="background-color: #333 !important;" href="javascript:void(0)">
+			<span class="HideOnMicro">&times;</span>
+		</a>
+		<input class="HideOnMicro" style="height: 40px; width: 190px; display: block;" type="text" id="searchbar" placeholder="Search.." title="Type in a name">
 		<a id="openAboutButton" style="float: right;" href="javascript:void(0)">
 			<img src="images/logo/logo_medium_border.png" height="48">
 		</a>
@@ -126,19 +134,23 @@
 	<div id="popUp" class="popUpClosed">
 	    <div id="close" class="close"><i class="fa fa-times"></i></div>
 	    <div id="new"><span>ABOUT</span></div>
-	    <h2><strong>Anisound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that focusses on the Human Computer Interaction aspect of data interfaces. This application visualizes animal data from online databases in a topographical way.<br/><br/>
+	    <h2><strong>Ani-Sound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that Interactive Information Displays. This application visualizes animal data from online databases in a topographical way.<br/><br/>
 	    This project has been written in <em>HTML+JavaScript</em> and is available as open-source software on its GitHub page.</h2><br>
-	  	<p style="margin: -10px 0 0 10px; display: left; color: silver; font-size: 12px;">AniSound: v2.2.7</p>
+	  	<p style="margin: -10px 0 0 10px; display: left; color: silver; font-size: 12px;">AniSound: v2.2.8</p>
 	    <a href="https://github.com/jeroenwzelf/anisound" target="_blank" class="aboutbutton">Visit Page</a>
   	</div>
 	</body>
 
 	<!-- Opening and closing windows (species filter, about popup) -->
 	<script type="text/javascript">
-		$("#searchbar").keyup(function(event) {
-		    if (event.keyCode === 13) {
-		        markerCluster.filterOnString(this.value.toLowerCase());
-		    }
+		$("#clearSearchIcon").click(function(e) {
+			var searchbar = document.getElementById("searchbar");
+			searchbar.value = '';
+			markerCluster.filterOnString('');
+		});
+
+		$("#searchbar").keyup(function(e) {
+		    markerCluster.filterOnString(this.value.toLowerCase());
 		});
 
 		$("#openAboutButton").click(function(e) {

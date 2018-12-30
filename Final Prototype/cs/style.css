@@ -1,5 +1,17 @@
 /* -- TOP NAVIGATION BAR -- */
 
+@media (max-width: 400px) {
+  .HideOnMicro {
+    display: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .HideOnSmall {
+    display: none !important;
+  }
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: #333;
@@ -54,6 +66,8 @@
 .filter_closed {
   left: -270px;
 }
+
+
 
 /* -- SPECIES FILTER CHECKBOX -- */
 .label-cbx {
@@ -125,6 +139,69 @@
 
 /* -- InfoWindow -- */
 
+#container {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+#EntryTop {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+#EntryName {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: white;
+  padding: 2px 14px;
+}
+
+#EntryPlay {
+  padding: 6px 0 4px 14px;
+}
+
+#EntrySub {
+  float: left;
+  font-style: italic;
+  color: #464646;
+}
+
+#EntryImgBox {
+  align-self: center;
+  padding: 8px;
+}
+
+#EntryLocation {
+  display: flex;
+  flex-flow: row wrap;
+
+}
+
+#EntryLoc {
+  padding: 0 8px;
+}
+
+.button {
+  background: transparent;
+  height: 34px;
+  border-color: transparent transparent transparent #202020;
+  transition: 200ms all ease;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 15px 0 17px 27px;
+}
+.button.paused {
+  border-style: double;
+  border-width: 0px 0 0px 27px;
+}
+.button:hover {
+  border-color: transparent transparent transparent #404040;
+}
+.button:focus {
+  outline: none;
+}
+
 #iw-container {
   margin-bottom: 0px;
 }
@@ -135,7 +212,6 @@
   padding: 10px 0 14px 14px;
   color: white;
   margin: 0;
-  border-radius: 2px 2px 0 0;
 }
 #iw-container .iw-content {
   font-size: 13px;
@@ -152,32 +228,6 @@
 .iw-subTitle {
   font-size: 16px;
   font-weight: 700;
-}
-
-.button {
-  margin-left: 30px;
-  border: 0;
-  display: inline-block;
-  background: transparent;
-  box-sizing: border-box;
-  float:right;
-  width: 0;
-  height: 37px;
-  border-color: transparent transparent transparent #202020;
-  transition: 200ms all ease;
-  cursor: pointer;
-  border-style: solid;
-  border-width: 18px 0 18px 30px;
-}
-.button.paused {
-  border-style: double;
-  border-width: 0px 0 0px 30px;
-}
-.button:hover {
-  border-color: transparent transparent transparent #404040;
-}
-.button:focus {
-  outline: none;
 }
 
 /* -- About popupwindow -- */

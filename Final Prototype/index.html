@@ -34,7 +34,6 @@
 
     <script type="text/javascript">
     	var loaded = 0;
-
     	function wait_for_loading() {
     		loaded++;
     		if (loaded == 3) init();
@@ -146,6 +145,17 @@
 
 		$("#searchbar").keyup(function(e) {
 		    markerCluster.filterOnString(this.value.toLowerCase());
+		    $("#popUp").addClass("popUpClosed");
+		    $('#speciesfilter').addClass('filter_closed');
+			$('#speciesfilter').removeClass('filter_open');
+		    e.stopPropagation();
+		});
+
+		$("#searchbar").click(function(e) {
+			$("#popUp").addClass("popUpClosed");
+		    $('#speciesfilter').addClass('filter_closed');
+			$('#speciesfilter').removeClass('filter_open');
+		    e.stopPropagation();
 		});
 
 		$("#openAboutButton").click(function(e) {
@@ -177,6 +187,7 @@
 		});
 
 		$(document).click(function(e) {
+			$(':focus').blur();
 			$('#speciesfilter').addClass('filter_closed');
 			$('#speciesfilter').removeClass('filter_open');
 			$("#popUp").addClass("popUpClosed");

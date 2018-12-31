@@ -79,6 +79,7 @@ function MarkerClusterer(map, data, opt_markers, opt_options) {
    * @type {Array.<google.maps.Marker>}
    * @private
    */
+  this.MAX_MARKERS = 100000;
   this.markers_ = [];
   this.invisibleMarkers = [];
 
@@ -181,10 +182,6 @@ function MarkerClusterer(map, data, opt_markers, opt_options) {
       that.resetViewport();
     }
     //this.createClusters_();
-  });
-
-  google.maps.event.addListener(this.map_, 'idle', function() {
-    that.redraw();
   });
 
   // Finally, add the markers
@@ -325,6 +322,9 @@ MarkerClusterer.prototype.getMarkers = function() {
   return this.markers_;
 };
 
+MarkerClusterer.prototype.almostFilled = function() {
+  return (this.markers_.length > this.MAX_MARKERS - 300);
+}
 
 /**
  *  Returns the number of markers in the clusterer
@@ -410,7 +410,7 @@ MarkerClusterer.prototype.getCalculator = function() {
  * @param {Array.<google.maps.Marker>} markers The markers to add.
  * @param {boolean=} opt_nodraw Whether to redraw the clusters.
  */
-MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw) {
+MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw, opt_filterstring) {
   if (markers.length) {
     for (var i = 0, marker; marker = markers[i]; i++) {
       this.pushMarkerTo_(marker);
@@ -420,9 +420,11 @@ MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw) {
       this.pushMarkerTo_(markers[marker]);
     }
   }
+  this.filterOnString(opt_filterstring);
   if (!opt_nodraw) {
     this.redraw();
   }
+  google.maps.event.trigger(this.map_, 'dragend');
 };
 
 
@@ -434,6 +436,13 @@ MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw) {
  */
 MarkerClusterer.prototype.pushMarkerTo_ = function(marker) {
   marker.isAdded = false;
+  if (this.markers_.length >= this.MAX_MARKERS) this.markers_.splice(0, 50);
+  for (var i = 0, m; m = this.markers_[i]; i++) {
+    if (this.distanceBetweenPoints_(marker.getPosition(), m.getPosition()) < 10) {
+      return;
+    }
+  }
+
   if (marker['draggable']) {
     // If the marker is draggable add a listener so we update the clusters on
     // the drag end.
@@ -482,14 +491,31 @@ MarkerClusterer.prototype.removeMarker_ = function(marker) {
   }
 
   if (index == -1) {
+    for (var i = 0, marker; marker = this.invisibleMarkers[i]; i++) {
+      this.markers_.push(marker);
+    }
+
+    if (this.invisibleMarkers.indexOf) {
+      index = this.invisibleMarkers.indexOf(marker);
+    } else {
+      for (var i = 0, m; m = this.invisibleMarkers[i]; i++) {
+        if (m == marker) {
+          index = i;
+          break;
+        }
+      }
+    }
+
     // Marker is not in our list of markers.
-    return false;
+    if (index == -1)
+      return false;
+    this.invisibleMarkers.splice(index, 1);
+  }
+  else {
+    this.markers_.splice(index, 1);
   }
 
   marker.setMap(null);
-
-  this.markers_.splice(index, 1);
-
   return true;
 };
 
@@ -701,6 +727,7 @@ MarkerClusterer.prototype.resetViewport = function(opt_hide) {
   }
 
   this.clusters_ = [];
+  this.createClusters_();
 };
 
 /**
@@ -727,6 +754,9 @@ MarkerClusterer.prototype.repaint = function() {
  */
 MarkerClusterer.prototype.redraw = function() {
   this.createClusters_();
+  for (var i = 0, marker; marker = this.markers_[i]; i++) {
+    addPopupWindowListeners(this.infoWindow, this.markers_[i]);
+  }
 };
 
 
@@ -807,9 +837,6 @@ MarkerClusterer.prototype.createClusters_ = function() {
       if (this.infoWindow.anchor == marker) this.infoWindow.close();
       this.addToClosestCluster_(marker);
     }
-    else {
-      this.addPopupWindowListeners(this.infoWindow, this.markers_[i]);
-    }
   }
 }
 
@@ -829,83 +856,83 @@ MarkerClusterer.prototype.filterOnString = function(string) {
   this.repaint();
 }
 
-MarkerClusterer.prototype.addPopupWindowListeners = function(infoWindow, marker) {
-  google.maps.event.clearListeners(infoWindow, 'domready');
-  google.maps.event.addListener(infoWindow,'domready', function() {
-    // set titlebar background color
-    document.getElementById("EntryName").style.backgroundColor = getSpeciesColor(infoWindow.marker.type);
+function addPopupWindowListeners(infoWindow, marker) {
+  google.maps.event.clearListeners(marker, 'click');  // clearing old marker onclick events
+  marker.addListener('click', function() {
+    var contentString =
+    '<div id="container">'+
+      '<div id="EntryTop">'+
+        '<div id="EntryName">'+
+          '<span>' + this.name_en + '</span>'+
+        '</div>'+
+        '<div style="flex: auto"></div>'+
+        '<div id="EntryPlay">'+
+          '<button id="audiobutton" class="button paused" type="button"></button>'+
+        '</div>'+
+      '</div>'+
+      '<div id="EntrySub">'+
+        '<span>' + this.name_la + '</span>'+
+      '</div>'+
+      '<div id="EntryImgBox">'+
+        '<img id="EntryImg" alt="(Loading image of ' + this.name_en + ')" height="200">' +
+      '</div>'+
+      '<div id="EntryLocation">'+
+        '<div style=align-self: center;>'+
+          '<img id="EntryFlag" height="20">'+
+        '</div>'+
+        '<div id="EntryLoc">'+
+          '<span>' + this.loc + '</span>'+
+        '</div>'+
+      '</div>'+
+      '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/mpeg"></audio>'+
+    '</div>';
 
-    // set audio ended eventlistener
-    document.getElementById('audio').addEventListener('ended', function() {
-      btn.addClass("paused");
-    });
+    infoWindow.setContent(contentString);
+    infoWindow.open(this.getMap(), this);
 
-    // set play button clicklistener
-    $('#audiobutton').click(function(e) {
-      if (document.getElementById('audio').paused) {
-        $('#audiobutton').addClass("paused");
-        document.getElementById('audio').play();
-      }
-      else {
-        $('#audiobutton').removeClass("paused");
-        document.getElementById('audio').pause();
-      }
-      return false;
+    google.maps.event.clearListeners(infoWindow, 'domready');
+    google.maps.event.addListener(infoWindow,'domready', function() {
+      // Get image
+      $.getJSON("https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+      {
+          tags: infoWindow.anchor.name_la,
+          tagmode: "any",
+          format: "json"
+      },
+      function(data) {
+          var rnd = Math.floor(Math.random() * data.items.length);
+          var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
+          document.getElementById("EntryImg").src = image_src;
+      });
+
+      // Get flag
+      var flag_api_endpoint = "https://restcountries.eu/rest/v2/name/";
+      httpGetAsync(flag_api_endpoint + marker.country, function(data) {
+        document.getElementById("EntryFlag").src = "https://www.countryflags.io/" + data[0].alpha2Code + "/shiny/64.png";
+      });
+
+      // set titlebar background color
+      document.getElementById("EntryName").style.backgroundColor = getSpeciesColor(infoWindow.anchor.type);
+
+      // set audio ended eventlistener
+      document.getElementById('audio').addEventListener('ended', function() {
+        btn.addClass("paused");
+      });
+
+      // set play button clicklistener
+      $('#audiobutton').click(function(e) {
+        if (document.getElementById('audio').paused) {
+          $('#audiobutton').addClass("paused");
+          document.getElementById('audio').play();
+        }
+        else {
+          $('#audiobutton').removeClass("paused");
+          document.getElementById('audio').pause();
+        }
+        return false;
+      });
     });
   });
-
-
-    google.maps.event.clearListeners(marker, 'click');  // clearing old marker onclick events
-    marker.addListener('click', function() {
-        var flag_api_endpoint = "https://restcountries.eu/rest/v2/name/";
-        httpGetAsync(flag_api_endpoint + marker.country, function(data) {
-          document.getElementById("EntryFlag").src = "https://www.countryflags.io/" + data[0].alpha2Code + "/shiny/64.png";
-        });
-        
-        var contentString =
-        '<div id="container">'+
-          '<div id="EntryTop">'+
-            '<div id="EntryName">'+
-              '<span>' + this.name_en + '</span>'+
-            '</div>'+
-            '<div style="flex: auto"></div>'+
-            '<div id="EntryPlay">'+
-              '<button id="audiobutton" class="button paused" type="button"></button>'+
-            '</div>'+
-          '</div>'+
-          '<div id="EntrySub">'+
-            '<span>' + this.name_la + '</span>'+
-          '</div>'+
-          '<div id="EntryImgBox">'+
-            '<img id="EntryImg" alt="(Loading image of ' + this.name_en + ')" height="200">' +
-          '</div>'+
-          '<div id="EntryLocation">'+
-            '<img id="EntryFlag" height="20">'+
-            '<div id="EntryLoc">'+
-              '<span>' + this.loc + '</span>'+
-            '</div>'+
-          '</div>'+
-          '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/mpeg"></audio>'+
-        '</div>';
-
-
-
-        infoWindow.setContent(contentString);
-        infoWindow.open(this.getMap(), this);
-        infoWindow.marker = this;
-
-        $.getJSON("https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-        {
-            tags: this.name_la,
-            tagmode: "any",
-            format: "json"
-        },
-        function(data) {
-            var rnd = Math.floor(Math.random() * data.items.length);
-            var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
-            document.getElementById("EntryImg").src = image_src;
-        });
-    });
 }
 
 /**
@@ -980,6 +1007,7 @@ Cluster.prototype.addMarker = function(marker) {
   }
 
   marker.isAdded = true;
+  addPopupWindowListeners(this.infoWindow, marker);
   this.markers_.push(marker);
 
   var len = this.markers_.length;
@@ -1175,6 +1203,7 @@ ClusterIcon.prototype.triggerClusterClick = function() {
   if (markerClusterer.isZoomOnClick()) {
     // Zoom into the cluster.
     this.map_.fitBounds(this.cluster_.getBounds());
+    markerClusterer.resetViewport();
   }
 };
 

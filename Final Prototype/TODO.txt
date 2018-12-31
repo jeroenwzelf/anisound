@@ -33,3 +33,12 @@
 	[x] Put google image API in popup first google image of entry name
 [x] mobile phone style
 [x] play button center better
+[x] addMarker should add with respect to the searchbar
+[x] Center flag from infowinfow
+[x] sound not playing when opening another entry
+[x] lose focus when clicking on map (for smartphones)
+[x] set max number of markers
+[ ] add markers when bounds are changed
+[ ] add markers when searchbar is changed
+[x] remove double markers
+[?] remove places (bars, restaurants, etc) from mapstyle

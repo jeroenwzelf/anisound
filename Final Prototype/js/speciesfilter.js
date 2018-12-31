@@ -1,6 +1,6 @@
 var CORS_PROXY = "https://cors.io/?"
 var XC_ENDPOINT = "https://www.xeno-canto.org/api/2/recordings";
-var PAGE_LIMIT = 5;
+var PAGE_LIMIT = 2;
 var pages_loaded;
 
 var map;
@@ -10,7 +10,7 @@ var markerCluster;
 
 function httpGetAsync(url, callback) {
 	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.onreadystatechange = function() { 
+	xmlHttp.onreadystatechange = function() {
 	    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
 	        callback(JSON.parse(xmlHttp.responseText));
 	}
@@ -19,9 +19,14 @@ function httpGetAsync(url, callback) {
 }
 
 // gets all entries from page
-function getXenoCantoPages(query, page) {
-	httpGetAsync(CORS_PROXY + XC_ENDPOINT + query + "&page=" + page, function(data) {
-		if (page < data.numPages && pages_loaded < PAGE_LIMIT) {
+function getXenoCantoPages(page) {
+	var SW = map.getBounds().getSouthWest();
+	var NE = map.getBounds().getNorthEast();
+	var query = "?query=" + opt_string.toLowerCase();
+	var box = " box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng();
+	httpGetAsync(CORS_PROXY + XC_ENDPOINT + query + box + "&page=" + page, function(data) {
+		if (pages_loaded < data.numPages && pages_loaded < PAGE_LIMIT) {
+			alert(CORS_PROXY + XC_ENDPOINT + query + box + "&page=" + page);
 			var markers = [];
 			// save current page
 			for (var i=0; i < data.recordings.length; i++) {
@@ -29,23 +34,19 @@ function getXenoCantoPages(query, page) {
 				entry.type = "birds";
 				markers.push(getXenoCantoMarkerFromJson(entry));
 			}
-			markerCluster.addMarkers(markers);
-
+			markerCluster.addMarkers(markers, true, document.getElementById("searchbar").value);
 			pages_loaded++;
-			// get random other page
-			var rnd; while ((rnd = Math.floor(Math.random() * data.numPages)) == page);
-			getXenoCantoPages(query, rnd);
+			if (!markerCluster.almostFilled()) {
+				var rnd; while ((rnd = Math.floor(Math.random() * data.numPages)) == page);
+				getXenoCantoPages(rnd);
+			}
 		}
 	});
 }
 
 function getXenoCantoEntries() {
-	var bounds = map.getBounds();
-	var SW = bounds.getSouthWest();
-	var NE = bounds.getNorthEast();
-	var query = "?query=box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng();
 	pages_loaded = 0;
-	getXenoCantoPages(query, 1);
+	getXenoCantoPages(1);
 }
 
 function getMarkerIcon(dataEntry) {
@@ -122,15 +123,19 @@ function init_map(mapstyle) {
 
 	google.maps.event.addListener(map,'tilesloaded', function () {
 		google.maps.event.clearListeners(map, 'tilesloaded');
+		getXenoCantoEntries(document.getElementById("searchbar").value.toLowerCase());
+		window.setInterval(function() {
+			getXenoCantoEntries(document.getElementById("searchbar").value.toLowerCase());
+		}, 12000);
 		var markers = [];
-		markers = markers.concat(getBirds(), getFelines(), getPrimates());
 		markerCluster = new MarkerClusterer(map, data, markers);
-
-		if (!map_inited) {
-			map_inited = true;
-			getXenoCantoEntries();
-		}
 	});
+}
+
+function getTestEntries() {
+	var markers = [];
+	markers = markers.concat(getBirds(), getFelines(), getPrimates());
+	return markers;
 }
 
 function getBirds() {

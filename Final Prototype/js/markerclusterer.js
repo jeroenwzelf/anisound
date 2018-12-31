@@ -79,7 +79,7 @@ function MarkerClusterer(map, data, opt_markers, opt_options) {
    * @type {Array.<google.maps.Marker>}
    * @private
    */
-  this.MAX_MARKERS = 100000;
+  this.MAX_MARKERS = 20000;
   this.markers_ = [];
   this.invisibleMarkers = [];
 
@@ -833,8 +833,7 @@ MarkerClusterer.prototype.createClusters_ = function() {
   var bounds = this.getExtendedBounds(mapBounds);
 
   for (var i = 0, marker; marker = this.markers_[i]; i++) {
-    if (!marker.isAdded && this.isMarkerInBounds_(marker, bounds)) {  
-      if (this.infoWindow.anchor == marker) this.infoWindow.close();
+    if (this.infoWindow.anchor != marker && !marker.isAdded && this.isMarkerInBounds_(marker, bounds)) {
       this.addToClosestCluster_(marker);
     }
   }

@@ -1,7 +1,8 @@
 var CORS_PROXY = "https://cors.io/?"
 var XC_ENDPOINT = "https://www.xeno-canto.org/api/2/recordings";
-var PAGE_LIMIT = 2;
+var PAGE_LIMIT = 10;
 var pages_loaded;
+var httprequest_old;
 
 var map;
 var map_inited = false;
@@ -22,30 +23,37 @@ function httpGetAsync(url, callback) {
 function getXenoCantoPages(page) {
 	var SW = map.getBounds().getSouthWest();
 	var NE = map.getBounds().getNorthEast();
-	var query = "?query=" + opt_string.toLowerCase();
 	var box = " box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng();
-	httpGetAsync(CORS_PROXY + XC_ENDPOINT + query + box + "&page=" + page, function(data) {
-		if (pages_loaded < data.numPages && pages_loaded < PAGE_LIMIT) {
-			alert(CORS_PROXY + XC_ENDPOINT + query + box + "&page=" + page);
-			var markers = [];
-			// save current page
-			for (var i=0; i < data.recordings.length; i++) {
-				var entry = data.recordings[i];
-				entry.type = "birds";
-				markers.push(getXenoCantoMarkerFromJson(entry));
+	var query = "?query=" + document.getElementById("searchbar").value;
+	var httprequest = CORS_PROXY + XC_ENDPOINT + query + box + "&page=" + page;
+
+	if (!httprequest_old) httprequest_old = httprequest;
+	if (httprequest == httprequest_old) {
+		httpGetAsync(httprequest, function(data) {
+			httprequest_old = httprequest;
+			if (pages_loaded < data.numPages && pages_loaded < PAGE_LIMIT) {
+				var markers = [];
+				// save current page
+				for (var i=0; i < data.recordings.length; i++) {
+					var entry = data.recordings[i];
+					entry.type = "birds";
+					markers.push(getXenoCantoMarkerFromJson(entry));
+				}
+				markerCluster.addMarkers(markers, true, document.getElementById("searchbar").value.toLowerCase());
+				pages_loaded++;
+				if (!markerCluster.almostFilled()) {
+					var rnd; while ((rnd = Math.floor(Math.random() * data.numPages)) == page);
+					getXenoCantoPages(rnd);
+				}
 			}
-			markerCluster.addMarkers(markers, true, document.getElementById("searchbar").value);
-			pages_loaded++;
-			if (!markerCluster.almostFilled()) {
-				var rnd; while ((rnd = Math.floor(Math.random() * data.numPages)) == page);
-				getXenoCantoPages(rnd);
-			}
-		}
-	});
+		});
+	}
+	else getXenoCantoEntries();
 }
 
 function getXenoCantoEntries() {
 	pages_loaded = 0;
+	httprequest_old = false;
 	getXenoCantoPages(1);
 }
 
@@ -123,10 +131,7 @@ function init_map(mapstyle) {
 
 	google.maps.event.addListener(map,'tilesloaded', function () {
 		google.maps.event.clearListeners(map, 'tilesloaded');
-		getXenoCantoEntries(document.getElementById("searchbar").value.toLowerCase());
-		window.setInterval(function() {
-			getXenoCantoEntries(document.getElementById("searchbar").value.toLowerCase());
-		}, 12000);
+		getXenoCantoEntries();
 		var markers = [];
 		markerCluster = new MarkerClusterer(map, data, markers);
 	});

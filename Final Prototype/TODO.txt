@@ -22,7 +22,7 @@
 	[x] Implement querying requests and saving the data
 	[x] Implement what happens when API request limit is reached
 	[x] Replace sampledata with new system
-	[ ] Entries at thesame location cannot be viewed as they are forever in a cluster (remove same location enries?)
+	[x] Entries at thesame location cannot be viewed as they are forever in a cluster (remove same location enries?)
 	[x] fix that soundfiles can be played
 	[x] fix fucking CORS header problem
 [x] Make a new GoogleMaps Style in styledMap.js
@@ -38,7 +38,8 @@
 [x] sound not playing when opening another entry
 [x] lose focus when clicking on map (for smartphones)
 [x] set max number of markers
-[ ] add markers when bounds are changed
-[ ] add markers when searchbar is changed
-[x] remove double markers
+[x] add markers when bounds are changed
+[x] add markers when searchbar is changed
+[ ] make interface more responsive
+[x] popupwindow closes when refreshing
 [?] remove places (bars, restaurants, etc) from mapstyle

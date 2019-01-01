@@ -203,34 +203,6 @@
   outline: none;
 }
 
-#iw-container {
-  margin-bottom: 0px;
-}
-#iw-container .iw-title {
-  font-family: 'Open Sans Condensed', sans-serif;
-  font-size: 22px;
-  font-weight: 400;
-  padding: 10px 0 14px 14px;
-  color: white;
-  margin: 0;
-}
-#iw-container .iw-content {
-  font-size: 13px;
-  line-height: 18px;
-  font-weight: 400;
-  margin-right: 1px;
-  padding: 5px 5px 5px 5px;
-  overflow-y: auto;
-  overflow-x: auto;
-}
-.iw-content img {
-  margin: 0 auto;
-}
-.iw-subTitle {
-  font-size: 16px;
-  font-weight: 700;
-}
-
 /* -- About popupwindow -- */
 #popUp {
   position: absolute;
@@ -283,7 +255,7 @@
 }
 
 a.aboutbutton {
-  margin: 0 auto;
+  margin: -60px auto;
   text-align: center;
   right: 0;
   left: 0;

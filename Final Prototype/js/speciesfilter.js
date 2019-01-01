@@ -1,8 +1,6 @@
 var CORS_PROXY = "https://cors.io/?"
 var XC_ENDPOINT = "https://www.xeno-canto.org/api/2/recordings";
-var PAGE_LIMIT = 10;
-var pages_loaded;
-var httprequest_old;
+var httprequest_old = false;
 
 var map;
 var map_inited = false;
@@ -19,42 +17,27 @@ function httpGetAsync(url, callback) {
 	xmlHttp.send(null);
 }
 
-// gets all entries from page
-function getXenoCantoPages(page) {
+function XenoCantoEntryThread(page) {
 	var SW = map.getBounds().getSouthWest();
 	var NE = map.getBounds().getNorthEast();
 	var box = " box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng();
 	var query = "?query=" + document.getElementById("searchbar").value;
-	var httprequest = CORS_PROXY + XC_ENDPOINT + query + box + "&page=" + page;
-
+	var httprequest = CORS_PROXY + XC_ENDPOINT + query + box;
 	if (!httprequest_old) httprequest_old = httprequest;
-	if (httprequest == httprequest_old) {
-		httpGetAsync(httprequest, function(data) {
-			httprequest_old = httprequest;
-			if (pages_loaded < data.numPages && pages_loaded < PAGE_LIMIT) {
-				var markers = [];
-				// save current page
-				for (var i=0; i < data.recordings.length; i++) {
-					var entry = data.recordings[i];
-					entry.type = "birds";
-					markers.push(getXenoCantoMarkerFromJson(entry));
-				}
-				markerCluster.addMarkers(markers, true, document.getElementById("searchbar").value.toLowerCase());
-				pages_loaded++;
-				if (!markerCluster.almostFilled()) {
-					var rnd; while ((rnd = Math.floor(Math.random() * data.numPages)) == page);
-					getXenoCantoPages(rnd);
-				}
-			}
-		});
-	}
-	else getXenoCantoEntries();
-}
 
-function getXenoCantoEntries() {
-	pages_loaded = 0;
-	httprequest_old = false;
-	getXenoCantoPages(1);
+	httpGetAsync(httprequest + "&page=" + page, function(data) {
+		var markers = [];
+		for (var i=0; i<data.recordings.length; i++) {
+			var entry = data.recordings[i];
+			entry.type = "birds";
+			markers.push(getXenoCantoMarkerFromJson(entry));
+		}
+		markerCluster.addMarkers(markers, true, document.getElementById("searchbar").value.toLowerCase());
+		var nextpage = page+1;
+		if (httprequest != httprequest_old || nextpage > data.numPages) nextpage = 1;
+		httprequest_old = httprequest;
+		XenoCantoEntryThread(nextpage);
+	});
 }
 
 function getMarkerIcon(dataEntry) {
@@ -131,86 +114,31 @@ function init_map(mapstyle) {
 
 	google.maps.event.addListener(map,'tilesloaded', function () {
 		google.maps.event.clearListeners(map, 'tilesloaded');
-		getXenoCantoEntries();
 		var markers = [];
 		markerCluster = new MarkerClusterer(map, data, markers);
+		XenoCantoEntryThread(1);
 	});
 }
 
-function getTestEntries() {
-	var markers = [];
-	markers = markers.concat(getBirds(), getFelines(), getPrimates());
-	return markers;
-}
-
-function getBirds() {
-	var markers = [];
-	for (var i = 0; i < data.entries.length; i++) {
-		if (data.entries[i].type == 'birds') {
-		    markers.push(getSampleDataMarkerFromJson(data.entries[i]));
-		}
-	}
-	return markers;
-}
-
-function getFelines() {
-	var markers = [];
-	for (var i = 0; i < data.entries.length; i++) {
-		if (data.entries[i].type == 'felines') {
-		    markers.push(getSampleDataMarkerFromJson(data.entries[i]));
-		}
-	}
-	return markers;	
-}
-
-function getPrimates() {
-	var markers = [];
-	for (var i = 0; i < data.entries.length; i++) {
-		if (data.entries[i].type == 'primates') {
-		    markers.push(getSampleDataMarkerFromJson(data.entries[i]));
-		}
-	}
-	return markers;
-}
-
-function filter_clicked_birds(cb) {
+function filter_clicked_birds_(cb) {
 	if (cb.checked) {
-		markerCluster.addMarkers(getBirds());
-		getXenoCantoEntries();
+		
 	}
 	else {
 		for (var i = 0, marker; marker = markerCluster.getMarkers()[i]; i++) {
-			if (marker.type == 'birds') {
+			if (marker.type == "birds") {
 				if (markerCluster.removeMarker(marker)) i--;
 			}
 		}
 	}
 }
 
-function filter_clicked_felines(cb) {
-	if (cb.checked) {
-		markerCluster.addMarkers(getFelines());
-	}
-	else {
-		for (var i = 0, marker; marker = markerCluster.getMarkers()[i]; i++) {
-			if (marker.type == 'felines') {
-				if (markerCluster.removeMarker(marker)) i--;
-			}
-		}
-	}
+function filter_clicked_felines_(cb) {
+	
 }
 
-function filter_clicked_primates(cb) {
-	if (cb.checked) {
-		markerCluster.addMarkers(getPrimates());
-	}
-	else {
-		for (var i = 0, marker; marker = markerCluster.getMarkers()[i]; i++) {
-			if (marker.type == 'primates') {
-				if (markerCluster.removeMarker(marker)) i--;
-			}
-		}
-	}
+function filter_clicked_primates_(cb) {
+	
 }
 
 function getSpeciesColor(species) {

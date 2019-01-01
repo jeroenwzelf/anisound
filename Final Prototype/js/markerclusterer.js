@@ -322,10 +322,6 @@ MarkerClusterer.prototype.getMarkers = function() {
   return this.markers_;
 };
 
-MarkerClusterer.prototype.almostFilled = function() {
-  return (this.markers_.length > this.MAX_MARKERS - 300);
-}
-
 /**
  *  Returns the number of markers in the clusterer
  *
@@ -436,7 +432,7 @@ MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw, opt_filters
  */
 MarkerClusterer.prototype.pushMarkerTo_ = function(marker) {
   marker.isAdded = false;
-  if (this.markers_.length >= this.MAX_MARKERS) this.markers_.splice(0, 50);
+  if (this.markers_.length >= this.MAX_MARKERS) this.markers_.splice(0, 500);
   for (var i = 0, m; m = this.markers_[i]; i++) {
     if (this.distanceBetweenPoints_(marker.getPosition(), m.getPosition()) < 10) {
       return;

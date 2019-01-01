@@ -16,9 +16,12 @@
 
 
 [ ] restrict google API key to https://jeroenwzelf.github.io/*
-[ ] shrink github text in about page
+[x] sign about page with our names
+[x] make interface more responsive
+[?] remove places (bars, restaurants, etc) from mapstyle
+[x] shrink github text in about page
 [x] add clear search
-[ ] Make system that gets real entries from online database api's and replace it with the sampledata
+[x] Make system that gets real entries from online database api's and replace it with the sampledata
 	[x] Implement querying requests and saving the data
 	[x] Implement what happens when API request limit is reached
 	[x] Replace sampledata with new system
@@ -27,7 +30,6 @@
 	[x] fix fucking CORS header problem
 [x] Make a new GoogleMaps Style in styledMap.js
 	[x] Make style in SnazzyMaps
-[ ] sign about page with our names
 [x] Make the popup window
 	[x] Style it
 	[x] Put google image API in popup first google image of entry name
@@ -40,6 +42,4 @@
 [x] set max number of markers
 [x] add markers when bounds are changed
 [x] add markers when searchbar is changed
-[ ] make interface more responsive
 [x] popupwindow closes when refreshing
-[?] remove places (bars, restaurants, etc) from mapstyle

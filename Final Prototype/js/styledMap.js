@@ -17,6 +17,15 @@ function getStyledMap() {
             {
                 "visibility": "on"
             }
+        ] 
+    },
+    {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
         ]
     },
     {

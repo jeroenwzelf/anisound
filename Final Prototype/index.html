@@ -47,13 +47,13 @@
 		}
 
 		function filter_clicked_birds(cb) {
-			filter_clicked_birds(cb);
+			filter_clicked_birds_(cb);
 		}
 		function filter_clicked_felines(cb) {
-			filter_clicked_felines(cb);
+			filter_clicked_felines_(cb);
 		}
 		function filter_clicked_primates(cb) {
-			filter_clicked_primates(cb);
+			filter_clicked_primates_(cb);
 		}
     </script>
 </head>
@@ -110,10 +110,10 @@
 		  </div>
 	</div>
 	<div class="topnav" id="myTopnav">
-		<a id="openSpeciesFilterButton" href="javascript:void(0);" class="icon">
+		<!-- <a id="openSpeciesFilterButton" href="javascript:void(0);" class="icon">
 			<i class="fa fa-bars"></i>
 			<span class="HideOnSmall" style="">Species filter</span>
-		</a>
+		</a> -->
 		<div style="flex: auto;">
 		</div>
 		<a id="clearSearchIcon" style="background-color: #333 !important;" href="javascript:void(0)">
@@ -128,9 +128,13 @@
 	<div id="popUp" class="popUpClosed">
 	    <div id="close" class="close"><i class="fa fa-times"></i></div>
 	    <div id="new"><span>ABOUT</span></div>
-	    <h2><strong>Ani-Sound</strong> is a <a title="Leiden University Homepage" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that Interactive Information Displays. This application visualizes animal data from online databases in a topographical way.<br/><br/></h2>
+	    <h2><strong>Ani-Sound</strong> is a <a title="Leiden University Website" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that Interactive Information Displays. This application visualizes animal data from the online database <a title="Xeno-canto Website" href="https://www.xeno-canto.org/about/xeno-canto"><em>Xeno-canto</em></a> in a topographical way.<br/><br/></h2>
 	    <h2 style="font-size: 11px !important; margin-top: 10px !important;">This project has been written in <em>HTML+JavaScript</em> and is available as open-source software on its GitHub page.</h2><br>
-	  	<p style="margin: -6px 0 0 10px; display: left; color: silver; font-size: 12px;">AniSound: v2.3.0</p>
+	    <div style="display: flex; flex-flow: row; padding: 5px;">
+	  		<p style="margin: -6px 0 0 10px; color: silver; font-size: 12px;">Arianna Freni </br> Jeroen Donkers</p>
+	  		<div style="flex: auto"></div>
+	  		<p style="margin: -6px 0 0 10px; color: silver; font-size: 12px;"></br>AniSound: v2.3.0</p>
+	  	</div>
 	    <a href="https://github.com/jeroenwzelf/anisound" target="_blank" class="aboutbutton">Visit Page</a>
   	</div>
 	</body>

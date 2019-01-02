@@ -24,12 +24,12 @@ function httpGetAsync(url, callback) {
 	    	else callback(null);
 		}
 	}
-	enableLoad();
 	xmlHttp.open("GET", url, true); // true for asynchronous 
 	xmlHttp.send(null);
 }
 
 function XenoCantoEntryThread(page) {
+	enableLoad();
 	var SW = map.getBounds().getSouthWest();
 	var NE = map.getBounds().getNorthEast();
 	var box = " box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng();

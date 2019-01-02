@@ -48,7 +48,7 @@
 /* -- Loading spinner -- */
 
 .loader {
-  margin: 0 30px;
+  margin: 0 20px;
   border: 10px solid #f3f3f3; /* Light grey */
   border-top: 10px solid #3498db; /* Blue */
   border-radius: 50%;
@@ -83,8 +83,6 @@
 .filter_closed {
   left: -270px;
 }
-
-
 
 /* -- SPECIES FILTER CHECKBOX -- */
 .label-cbx {

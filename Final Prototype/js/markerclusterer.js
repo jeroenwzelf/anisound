@@ -181,8 +181,12 @@ function MarkerClusterer(map, data, opt_markers, opt_options) {
       that.prevZoom_ = zoom;
       that.resetViewport();
     }
-    //this.createClusters_();
   });
+
+  google.maps.event.addListener(this.map_, 'idle', function() {
+    that.redraw();
+  });
+
 
   // Finally, add the markers
   if (opt_markers && (opt_markers.length || Object.keys(opt_markers).length)) {
@@ -417,10 +421,7 @@ MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw, opt_filters
     }
   }
   this.filterOnString(opt_filterstring);
-  if (!opt_nodraw) {
-    this.redraw();
-  }
-  google.maps.event.trigger(this.map_, 'dragend');
+  this.redraw();
 };
 
 
@@ -723,7 +724,6 @@ MarkerClusterer.prototype.resetViewport = function(opt_hide) {
   }
 
   this.clusters_ = [];
-  this.createClusters_();
 };
 
 /**
@@ -911,7 +911,7 @@ function addPopupWindowListeners(infoWindow, marker) {
 
       // set audio ended eventlistener
       document.getElementById('audio').addEventListener('ended', function() {
-        btn.addClass("paused");
+        document.getElementById("#audiobutton").addClass("paused");
       });
 
       // set play button clicklistener
@@ -1198,7 +1198,7 @@ ClusterIcon.prototype.triggerClusterClick = function() {
   if (markerClusterer.isZoomOnClick()) {
     // Zoom into the cluster.
     this.map_.fitBounds(this.cluster_.getBounds());
-    markerClusterer.resetViewport();
+    //markerClusterer.resetViewport();
   }
 };
 

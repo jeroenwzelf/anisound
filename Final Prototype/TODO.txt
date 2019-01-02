@@ -11,7 +11,8 @@
 [x] Set up Google Billing to get rid of 'For development purposes only' map
 	[x] Get credit card
 	[x] Link credit card in Google Developer Console
-
+[ ] entries are not loading on safari
+[ ] entries not clickable sometimes
 
 
 

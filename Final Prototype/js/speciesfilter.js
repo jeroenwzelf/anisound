@@ -24,7 +24,6 @@ function XenoCantoEntryThread(page) {
 	var query = "?query=" + document.getElementById("searchbar").value;
 	var httprequest = CORS_PROXY + XC_ENDPOINT + query + box;
 	if (!httprequest_old) httprequest_old = httprequest;
-
 	httpGetAsync(httprequest + "&page=" + page, function(data) {
 		var markers = [];
 		for (var i=0; i<data.recordings.length; i++) {

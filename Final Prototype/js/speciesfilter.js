@@ -7,12 +7,24 @@ var map_inited = false;
 
 var markerCluster;
 
+function enableLoad() {
+	document.getElementById("loader").style.display = "block";
+}
+
+function disableLoad() {
+	document.getElementById("loader").style.display = "none";
+}
+
 function httpGetAsync(url, callback) {
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() {
-	    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-	        callback(JSON.parse(xmlHttp.responseText));
+	    if (xmlHttp.readyState == 4) {
+	    	disableLoad();
+	    	if (xmlHttp.status == 200) callback(JSON.parse(xmlHttp.responseText));
+	    	else callback(null);
+		}
 	}
+	enableLoad();
 	xmlHttp.open("GET", url, true); // true for asynchronous 
 	xmlHttp.send(null);
 }
@@ -25,15 +37,18 @@ function XenoCantoEntryThread(page) {
 	var httprequest = CORS_PROXY + XC_ENDPOINT + query + box;
 	if (!httprequest_old) httprequest_old = httprequest;
 	httpGetAsync(httprequest + "&page=" + page, function(data) {
-		var markers = [];
-		for (var i=0; i<data.recordings.length; i++) {
-			var entry = data.recordings[i];
-			entry.type = "birds";
-			markers.push(getXenoCantoMarkerFromJson(entry));
-		}
-		markerCluster.addMarkers(markers, true, document.getElementById("searchbar").value.toLowerCase());
 		var nextpage = page+1;
-		if (httprequest != httprequest_old || nextpage > data.numPages) nextpage = 1;
+		if (data != null) {
+			var markers = [];
+			for (var i=0; i<data.recordings.length; i++) {
+				var entry = data.recordings[i];
+				entry.type = "birds";
+				markers.push(getXenoCantoMarkerFromJson(entry));
+			}
+			markerCluster.addMarkers(markers, true, document.getElementById("searchbar").value.toLowerCase());
+			if (httprequest != httprequest_old || nextpage >= data.numPages) nextpage = 1;
+		}
+		else nextpage = 1;
 		httprequest_old = httprequest;
 		XenoCantoEntryThread(nextpage);
 	});

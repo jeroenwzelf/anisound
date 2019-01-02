@@ -911,7 +911,7 @@ function addPopupWindowListeners(infoWindow, marker) {
 
       // set audio ended eventlistener
       document.getElementById('audio').addEventListener('ended', function() {
-        document.getElementById("#audiobutton").addClass("paused");
+        $('#audiobutton').removeClass("paused");
       });
 
       // set play button clicklistener

@@ -79,7 +79,7 @@ function MarkerClusterer(map, data, opt_markers, opt_options) {
    * @type {Array.<google.maps.Marker>}
    * @private
    */
-  this.MAX_MARKERS = 20000;
+  this.MAX_MARKERS = 4000;
   this.markers_ = [];
   this.invisibleMarkers = [];
 

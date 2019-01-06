@@ -100,23 +100,6 @@ function getMarkerIcon(dataEntry) {
 	return canvas.toDataURL();
 }
 
-function getSampleDataMarkerFromJson(dataEntry) {
-	var marker = new google.maps.Marker({
-    	name_en: dataEntry.en,
-    	name_la: dataEntry.gen + " " + dataEntry.sp,
-    	gen: dataEntry.gen,
-    	type: dataEntry.type,
-    	country: dataEntry.cnt,
-    	loc: dataEntry.loc,
-    	url: dataEntry.file.slice(2),
-    	animation: google.maps.Animation.DROP,
-        position: new google.maps.LatLng(dataEntry.lat,
-	    	dataEntry.lng),
-        icon: getMarkerIcon(dataEntry)
-	});
-	return marker;
-}
-
 function getXenoCantoMarkerFromJson(dataEntry) {
 	var marker = new google.maps.Marker({
     	name_en: dataEntry.en,
@@ -148,7 +131,7 @@ function init_map(mapstyle) {
 	google.maps.event.addListener(map,'tilesloaded', function () {
 		google.maps.event.clearListeners(map, 'tilesloaded');
 		var markers = [];
-		markerCluster = new MarkerClusterer(map, data, markers);
+		markerCluster = new MarkerClusterer(map, markers);
 		document.getElementById("loader").style.display = "block";
 		XenoCantoEntryThread(1);
 	});

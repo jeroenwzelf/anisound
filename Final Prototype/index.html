@@ -1,3 +1,12 @@
+<!--
+ ! @name index.html for Ani-Sound
+ ! @author Jeroen Donkers
+ ! @fileoverview
+ ! The main html file for Ani-Sound. This is where the scripts are loaded and all the content is created.
+ ! It contains the page layout, some UI functionality (mostly button clicking), and it initializes the 
+ ! scripts used to set up the interactive world map with its entries.
+ ! -->
+
 <!DOCTYPE>
 <html>
   <head>
@@ -20,7 +29,7 @@
 		height: calc(100% - 70px);
       }
     </style>
-
+    <!-- Google Maps API, JQuery and Bootstrap -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhjEZgjkFvvD2Yvf099m5qtvipcm79ays&callback=initialize"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -30,59 +39,48 @@
 	<!-- anisound scripts -->
     <script type="text/javascript" src="js/filtergenera.json"></script>
     <script type="text/javascript" src="js/markerclusterer.js"></script>
-    <script type="text/javascript" src="js/speciesfilter.js"></script>
+    <script type="text/javascript" src="js/entrymanager.js"></script>
     <script type="text/javascript" src="js/styledMap.js"></script>
 	<link rel="stylesheet" type="text/css" href="cs/style.css">
 
     <script type="text/javascript">
-    	var loaded = 0;
-    	function wait_for_loading() {
-    		loaded++;
-    		if (loaded == 3) init();
-    	}
-
 		function init() {
 			init_map(getStyledMap());
 			getInnerHtmlFilterList();
 		}
-
-		function filter_clicked_birds(cb) {
-			filter_clicked_birds_(cb);
-		}
-		function filter_clicked_felines(cb) {
-			filter_clicked_felines_(cb);
-		}
-		function filter_clicked_primates(cb) {
-			filter_clicked_primates_(cb);
-		}
     </script>
 </head>
 <body>
-	<img id="birds" src="images/markers/animals/birds.png" style="display:none" onload="wait_for_loading()">
-    <img id="felines" src="images/markers/animals/felines.png" style="display:none" onload="wait_for_loading()">
-    <img id="primates" src="images/markers/animals/primates.png" style="display:none" onload="wait_for_loading()">
+	<img id="birds" src="images/markers/animals/birds.png" style="display:none" onload="init()">
 	<!-- Sidebar -->
 	<div class="w3-sidebar w3-bar-block filter_closed" id="speciesfilter">
 		<button id="closeSpeciesFilterButton" class="w3-bar-item w3-button w3-large">Close &times;</button>
 		<div id=genuslist> </div>
 	</div>
+	<!-- Top Navigation Bar -->
 	<div class="topnav" id="myTopnav">
+		<!-- Genus Filter -->
 		<a id="openSpeciesFilterButton" href="javascript:void(0);" class="icon">
 			<i class="fa fa-bars"></i>
 			<span class="HideOnSmallWidth" style="">Genus filter</span>
 		</a>
 		<div style="flex: auto;">
 		</div>
+		<!-- Search Bar -->
 		<a id="clearSearchIcon" data-toggle="tooltip" data-placement="bottom" title="Clears the search bar." style="background-color: #333 !important;" href="javascript:void(0)">
 			<span class="HideOnMicroWidth">&times;</span>
 		</a>
 		<input class="HideOnMicroWidth" style="height: 40px; width: 190px; display: block;" type="text" id="searchbar" placeholder="Search.." title="Type in a name">
+		<!-- About Popup Button -->
 		<a id="openAboutButton" data-toggle="tooltip" data-placement="bottom" title="About Ani-Sound." style="float: right;" href="javascript:void(0)">
 			<img src="images/logo/logo_medium_border.png" height="48">
 		</a>
 	</div>
+	<!-- Google Map -->
 	<div id="map"></div>
+	<!-- Query Loading Spinner -->
 	<div id="loader" class="loader HideOnMicroHeight" style="display: none" data-toggle="tooltip" data-placement="bottom"></div> 
+	<!-- About Popup -->
 	<div id="popUp" class="popUpClosed">
 	    <div id="close" class="close"><i class="fa fa-times"></i></div>
 	    <div id="new"><span>ABOUT</span></div>
@@ -97,7 +95,7 @@
   	</div>
 	</body>
 
-	<!-- Opening and closing windows (species filter, about popup) -->
+	<!-- Opening and closing windows (genus filter, about popup) -->
 	<script type="text/javascript">
 		$("#clearSearchIcon").click(function(e) {
 			var searchbar = document.getElementById("searchbar");

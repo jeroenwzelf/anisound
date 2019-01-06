@@ -1,3 +1,10 @@
+/* 
+ * @name filtergenera.json for Ani-Sound
+ * @author Jeroen Donkers
+ * @fileoverview
+ * This file contains the genera for which the user is able to filter on.
+*/
+
 var filtergenera = {
 	"genera": [
 		{	"name": "Tinamus",

@@ -1,15 +1,10 @@
-// ==ClosureCompiler==
-// @compilation_level ADVANCED_OPTIMIZATIONS
-// @externs_url http://closure-compiler.googlecode.com/svn/trunk/contrib/externs/maps/google_maps_api_v3_3.js
-// ==/ClosureCompiler==
-
 /**
  * @name MarkerClusterer for Google Maps v3
- * @version version 1.0.3
- * @author Luke Mahe
+ * @version version 2.0.3
+ * @author Luke Mahe, edited by Jeroen Donkers
  * @fileoverview
  * The library creates and manages per-zoom-level clusters for large amounts of
- * markers.
+ * markers. It also incorporates Ani-Sound-specific functions such as filtering and infowindows when clicking on a marker
  */
 
 /**
@@ -74,10 +69,6 @@ function MarkerClusterer(map, opt_markers, opt_options) {
 
   this.infoWindow = new google.maps.InfoWindow();
 
-  /**
-   * @type {Array.<google.maps.Marker>}
-   * @private
-   */
   this.MAX_MARKERS = 4000;
   this.markers_ = [];
   this.invisibleMarkers = [];
@@ -833,7 +824,9 @@ MarkerClusterer.prototype.createClusters_ = function() {
     }
   }
 }
-
+ 
+/* @author Jeroen Donkers */
+/* -- Filters the entries based on the searchbar and the Genus Filter -- */
 MarkerClusterer.prototype.filterOnString = function() {
   var string = document.getElementById("searchbar").value.toLowerCase();
 
@@ -869,6 +862,9 @@ MarkerClusterer.prototype.filterOnString = function() {
   this.repaint();
 }
 
+/* @author Jeroen Donkers */
+/* -- Adds click-listeners for the Google Maps Marker
+      (on clicking a marker, it creates the infoWindow) -- */
 function addPopupWindowListeners(infoWindow, marker) {
   google.maps.event.clearListeners(marker, 'click');  // clearing old marker onclick events
   marker.addListener('click', function() {

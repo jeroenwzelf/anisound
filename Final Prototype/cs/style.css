@@ -1,3 +1,11 @@
+/* 
+ * @name style.css for Ani-Sound
+ * @author Jeroen Donkers
+ * @fileoverview
+ * This file contains the style of every html element described in index.html. The function of these
+ * declarations is solely to visually enhance and position the elements.
+*/
+
 /* -- TOP NAVIGATION BAR -- */
 
 @media (max-width: 400px) {
@@ -24,7 +32,7 @@
   }
 }
 
-/* Add a black background color to the top navigation */
+
 .topnav {
     background-color: #333;
     overflow: hidden;
@@ -51,13 +59,7 @@
     color: black;
 }
 
-/* Add an active class to highlight the current page */
-.active {
-    background-color: #4CAF50;
-    color: white;
-}
-
-/* -- Loading spinner -- */
+/* -- QUERY LOADING SPINNER -- */
 
 .loader {
   position: absolute;
@@ -76,7 +78,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* -- SPECIES FILTER -- */
+/* -- GENUS FILTER -- */
 
 #speciesfilter {
 	position: fixed;
@@ -98,7 +100,8 @@
   left: -270px;
 }
 
-/* -- SPECIES FILTER CHECKBOX -- */
+/* -- GENUS FILTER CHECKBOX -- */
+
 .label-cbx {
   user-select: none;
   cursor: pointer;
@@ -160,7 +163,7 @@
   opacity: 0;
 }
 
-/* -- InfoWindow -- */
+/* -- ENTRY INFOWINDOW -- */
 
 #container {
   display: flex;
@@ -226,7 +229,7 @@
   outline: none;
 }
 
-/* -- About popupwindow -- */
+/* -- ABOUT POPUP -- */
 #popUp {
   position: absolute;
   margin-left: -225px;

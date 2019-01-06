@@ -1,3 +1,12 @@
+/* 
+ * @name entrymanager.js for Ani-Sound
+ * @author Jeroen Donkers
+ * @fileoverview
+ * This file initializes the Google Map and will repeatedly query the xeno-canto API for new entries.
+ * It also draws the entry icons, and is responsible for filling the genus filter with the list of genera + checkboxes,
+ * and its corresponding functionality. It also implements the loading spinner when this script is querying xeno-canto entries.
+*/
+
 var CORS_PROXY = "https://cors.io/?"
 var XC_ENDPOINT = "https://www.xeno-canto.org/api/2/recordings";
 var httprequest_old = false;
@@ -7,6 +16,7 @@ var map_inited = false;
 
 var markerCluster;
 
+/* -- Enables query loading spinner -- */
 function enableLoad(name, gen) {
 	var loader = document.getElementById("loader");
 	if (gen.length > 0) gen = " (" + gen + ")";
@@ -14,10 +24,12 @@ function enableLoad(name, gen) {
 	loader.title = "Ani-Sound is currently loading " + name + gen + " entries from the online Xeno-canto database.";
 }
 
+/* -- Disables query loading spinner -- */
 function disableLoad() {
 	document.getElementById("loader").style.display = "none";
 }
 
+/* -- Performs an asynchronous http request -- */
 function httpGetAsync(url, callback) {
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() {
@@ -27,10 +39,11 @@ function httpGetAsync(url, callback) {
 	    	else callback(null);
 		}
 	}
-	xmlHttp.open("GET", url, true); // true for asynchronous 
+	xmlHttp.open("GET", url, true);
 	xmlHttp.send(null);
 }
 
+/* -- Sets up the genus query parameter -- */
 function getQueryGen() {
 	var enabledGenera = getAllEnabledGenera();
 	if (enabledGenera.indexOf("Other") > -1) return "";
@@ -38,11 +51,16 @@ function getQueryGen() {
 	return " gen:" + enabledGenera[rnd];
 }
 
+/* -- Gets the genus from a certain genus query parameter -- */
 function getGen(queryGen) {
 	if (queryGen.length > 0) return queryGen.split(':')[1];
 	return "";
 }
 
+/* -- A sophisticated algorithm ensuring that entries get loaded from the
+	  xeno-canto API. It continuously requests pages from the API and it
+	  updates its query using the current Map viewport, the searchbar contents
+	  and the selected genera in the genus filter. -- */
 function XenoCantoEntryThread(page) {
 	var SW = map.getBounds().getSouthWest();
 	var NE = map.getBounds().getNorthEast();
@@ -57,10 +75,9 @@ function XenoCantoEntryThread(page) {
 		var nextpage = page+1;
 		if (data != null) {
 			var markers = [];
-			for (var i=0; i<data.recordings.length; i++) {
-				var entry = data.recordings[i];
-				entry.type = "birds";
-				markers.push(getXenoCantoMarkerFromJson(entry));
+			for (var i=0, dataEntry; dataEntry = data.recordings[i]; i++) {
+				dataEntry.type = "birds";
+				markers.push(getXenoCantoMarkerFromJson(dataEntry));
 			}
 			markerCluster.addMarkers(markers, true, document.getElementById("searchbar").value.toLowerCase());
 			if (httprequest != httprequest_old || nextpage >= data.numPages) nextpage = 1;
@@ -71,6 +88,7 @@ function XenoCantoEntryThread(page) {
 	});
 }
 
+/* -- Creates a 2D icon for dataEntry. -- */
 function getMarkerIcon(dataEntry) {
 	var width = 50; var height = 50; var radius = 20; var imgscale = 15;
 	var canvas, context;
@@ -100,6 +118,7 @@ function getMarkerIcon(dataEntry) {
 	return canvas.toDataURL();
 }
 
+/* -- Creates a Google Maps Marker for dataEntry -- */
 function getXenoCantoMarkerFromJson(dataEntry) {
 	var marker = new google.maps.Marker({
     	name_en: dataEntry.en,
@@ -117,6 +136,8 @@ function getXenoCantoMarkerFromJson(dataEntry) {
 	return marker;
 }
 
+/* -- Initializes the Google Map, sets its custom style,
+	  starts up the MarkerClusterer and starts querying for entries -- */
 function init_map(mapstyle) {
 	var center = new google.maps.LatLng(37.4419, -122.1419);
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -137,6 +158,7 @@ function init_map(mapstyle) {
 	});
 }
 
+/* -- Creates the inner HTML for the Genus Filter -- */
 function getInnerHtmlFilterList() {
 	var innerHTML = "";
 	for (var i = 0; i < filtergenera.genera.length; i++)
@@ -146,6 +168,7 @@ function getInnerHtmlFilterList() {
 		document.getElementById(getColorDivId(filtergenera.genera[i].name)).style.borderLeftColor = filtergenera.genera[i].color;
 }
 
+/* -- Creates the inner HTML for one Genus Filter checkbox -- */
 function getInnerHtmlFilterCheckBox(genus) {
 	var innerHtml =
 	'<div style="padding: 5px 15px;">'+
@@ -165,6 +188,7 @@ function getInnerHtmlFilterCheckBox(genus) {
 	return innerHtml;
 }
 
+/* -- Returns a list of all genera checkboxes that are enabled -- */
 function getAllEnabledGenera() {
 	var genera = [];
 	for (var i = 0; i < filtergenera.genera.length; i++) {
@@ -175,13 +199,16 @@ function getAllEnabledGenera() {
 	return genera;
 }
 
+/* -- Returns the ID of genera checkboxes -- */
 function getColorDivId(genus) { return 'colordiv_' + getCheckBoxId(genus); }
 function getCheckBoxId(genus) { return genus.toLowerCase() + 'cbx'; }
 
+/* -- Happens when a genus checkbox is clicked -- */
 function filter_clicked(cb) {
 	markerCluster.filterOnString();
 }
 
+/* -- Returns the color of a specific genus -- */
 function getColor(genus) {
 	for (var i = 0; i < filtergenera.genera.length; i++)
 		if (genus.toLowerCase() == filtergenera.genera[i].name.toLowerCase())

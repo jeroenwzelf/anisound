@@ -1,3 +1,10 @@
+/* 
+ * @name styledMap.js for a custom Google Maps map style
+ * @author Jeroen Donkers
+ * @fileoverview
+ * This file is created with the interface of snazzymaps' custom map style creator available on https://snazzymaps.com/.
+*/
+
 function getStyledMap() {
 	return new google.maps.StyledMapType(
 	[

@@ -3,10 +3,11 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" type="image/png" href="images/logo/logo_medium.png">
-    <title>AniSound</title>
+    <title>Ani-Sound</title>
 
     <style type="text/css">
       body {
+      	position: relative;
 		width: 100%;
 		height: 100%;
         margin: 0;
@@ -113,20 +114,20 @@
 	<div class="topnav" id="myTopnav">
 		<!-- <a id="openSpeciesFilterButton" href="javascript:void(0);" class="icon">
 			<i class="fa fa-bars"></i>
-			<span class="HideOnSmall" style="">Species filter</span>
+			<span class="HideOnSmallWidth" style="">Species filter</span>
 		</a> -->
-		<div id="loader" class="loader" data-toggle="tooltip" data-placement="bottom" title="Ani-Sound is currently loading new entries from the online Xeno-canto database."></div> 
 		<div style="flex: auto;">
 		</div>
 		<a id="clearSearchIcon" data-toggle="tooltip" data-placement="bottom" title="Clears the search bar." style="background-color: #333 !important;" href="javascript:void(0)">
-			<span class="HideOnMicro">&times;</span>
+			<span class="HideOnMicroWidth">&times;</span>
 		</a>
-		<input class="HideOnMicro" style="height: 40px; width: 190px; display: block;" type="text" id="searchbar" placeholder="Search.." title="Type in a name">
+		<input class="HideOnMicroWidth" style="height: 40px; width: 190px; display: block;" type="text" id="searchbar" placeholder="Search.." title="Type in a name">
 		<a id="openAboutButton" data-toggle="tooltip" data-placement="bottom" title="About Ani-Sound." style="float: right;" href="javascript:void(0)">
 			<img src="images/logo/logo_medium_border.png" height="48">
 		</a>
 	</div>
 	<div id="map"></div>
+	<div id="loader" class="loader HideOnMicroHeight" style="display: none" data-toggle="tooltip" data-placement="bottom" title="Ani-Sound is currently loading new entries from the online Xeno-canto database."></div> 
 	<div id="popUp" class="popUpClosed">
 	    <div id="close" class="close"><i class="fa fa-times"></i></div>
 	    <div id="new"><span>ABOUT</span></div>

@@ -1,13 +1,25 @@
 /* -- TOP NAVIGATION BAR -- */
 
 @media (max-width: 400px) {
-  .HideOnMicro {
+  .HideOnMicroWidth {
     display: none !important;
   }
 }
 
 @media (max-width: 700px) {
-  .HideOnSmall {
+  .HideOnSmallWidth {
+    display: none !important;
+  }
+}
+
+@media (max-height: 400px) {
+  .HideOnMicroHeight {
+    display: none !important;
+  }
+}
+
+@media (max-height: 700px) {
+  .HideOnSmallHeight {
     display: none !important;
   }
 }
@@ -48,12 +60,14 @@
 /* -- Loading spinner -- */
 
 .loader {
-  margin: 0 20px;
-  border: 10px solid #f3f3f3; /* Light grey */
-  border-top: 10px solid #3498db; /* Blue */
+  position: absolute;
+  right: 15px;
+  bottom: 210px;
+  border: 15px solid #333; /* Light grey */
+  border-top: 15px solid #3498db; /* Blue */
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   animation: spin 2s linear infinite;
 }
 

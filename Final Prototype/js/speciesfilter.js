@@ -130,6 +130,7 @@ function init_map(mapstyle) {
 		google.maps.event.clearListeners(map, 'tilesloaded');
 		var markers = [];
 		markerCluster = new MarkerClusterer(map, data, markers);
+		document.getElementById("loader").style.display = "block";
 		XenoCantoEntryThread(1);
 	});
 }

@@ -11,15 +11,8 @@
 [x] Set up Google Billing to get rid of 'For development purposes only' map
 	[x] Get credit card
 	[x] Link credit card in Google Developer Console
-[ ] entries are not loading on safari
-[ ] entries not clickable sometimes
-
-
-
-[ ] restrict google API key to https://jeroenwzelf.github.io/*
 [x] sign about page with our names
 [x] make interface more responsive
-[?] remove places (bars, restaurants, etc) from mapstyle
 [x] shrink github text in about page
 [x] add clear search
 [x] Make system that gets real entries from online database api's and replace it with the sampledata
@@ -44,3 +37,14 @@
 [x] add markers when bounds are changed
 [x] add markers when searchbar is changed
 [x] popupwindow closes when refreshing
+[?] remove places (bars, restaurants, etc) from mapstyle
+[ ] restrict google API key to https://jeroenwzelf.github.io/*
+
+[ ] species filter
+	[ ] add it
+		[ ] functionality in search query
+		[ ] add genus' names
+			[ ] find genus'
+			[ ] link wikipedia to genus
+[ ] add arianna's aboutpage line
+[ ] move loading spinner to on map

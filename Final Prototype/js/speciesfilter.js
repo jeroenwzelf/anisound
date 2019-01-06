@@ -7,8 +7,11 @@ var map_inited = false;
 
 var markerCluster;
 
-function enableLoad() {
-	document.getElementById("loader").style.display = "block";
+function enableLoad(name, gen) {
+	var loader = document.getElementById("loader");
+	if (gen.length > 0) gen = " (" + gen + ")";
+	loader.style.display = "block";
+	loader.title = "Ani-Sound is currently loading " + name + gen + " entries from the online Xeno-canto database.";
 }
 
 function disableLoad() {
@@ -28,14 +31,28 @@ function httpGetAsync(url, callback) {
 	xmlHttp.send(null);
 }
 
+function getQueryGen() {
+	var enabledGenera = getAllEnabledGenera();
+	if (enabledGenera.indexOf("Other") > -1) return "";
+	var rnd = Math.floor(Math.random() * enabledGenera.length);
+	return " gen:" + enabledGenera[rnd];
+}
+
+function getGen(queryGen) {
+	if (queryGen.length > 0) return queryGen.split(':')[1];
+	return "";
+}
+
 function XenoCantoEntryThread(page) {
-	enableLoad();
 	var SW = map.getBounds().getSouthWest();
 	var NE = map.getBounds().getNorthEast();
 	var box = " box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng();
 	var query = "?query=" + document.getElementById("searchbar").value;
-	var httprequest = CORS_PROXY + XC_ENDPOINT + query + box;
+	var gen = getQueryGen();
+
+	var httprequest = CORS_PROXY + XC_ENDPOINT + query + box + gen;
 	if (!httprequest_old) httprequest_old = httprequest;
+	enableLoad(document.getElementById("searchbar").value, getGen(gen));
 	httpGetAsync(httprequest + "&page=" + page, function(data) {
 		var nextpage = page+1;
 		if (data != null) {
@@ -69,7 +86,7 @@ function getMarkerIcon(dataEntry) {
 
 	// Create colored circle
 	context.fillStyle = "rgba(255, 255, 255, 1)";
-	context.strokeStyle = getSpeciesColor(dataEntry.type);
+	context.strokeStyle = getColor(dataEntry.gen);
 	context.lineWidth = 4;
 	context.beginPath();
 	context.arc(width/2, height/2, radius, 0, 2*Math.PI);
@@ -87,6 +104,7 @@ function getSampleDataMarkerFromJson(dataEntry) {
 	var marker = new google.maps.Marker({
     	name_en: dataEntry.en,
     	name_la: dataEntry.gen + " " + dataEntry.sp,
+    	gen: dataEntry.gen,
     	type: dataEntry.type,
     	country: dataEntry.cnt,
     	loc: dataEntry.loc,
@@ -103,6 +121,7 @@ function getXenoCantoMarkerFromJson(dataEntry) {
 	var marker = new google.maps.Marker({
     	name_en: dataEntry.en,
     	name_la: dataEntry.gen + " " + dataEntry.sp,
+    	gen: dataEntry.gen,
     	type: dataEntry.type,
     	country: dataEntry.cnt,
     	loc: dataEntry.loc,
@@ -135,31 +154,54 @@ function init_map(mapstyle) {
 	});
 }
 
-function filter_clicked_birds_(cb) {
-	if (cb.checked) {
-		
-	}
-	else {
-		for (var i = 0, marker; marker = markerCluster.getMarkers()[i]; i++) {
-			if (marker.type == "birds") {
-				if (markerCluster.removeMarker(marker)) i--;
-			}
-		}
-	}
+function getInnerHtmlFilterList() {
+	var innerHTML = "";
+	for (var i = 0; i < filtergenera.genera.length; i++)
+    	innerHTML = innerHTML + getInnerHtmlFilterCheckBox(filtergenera.genera[i].name);
+	document.getElementById('genuslist').innerHTML = innerHTML;
+	for (var i = 0; i < filtergenera.genera.length; i++)
+		document.getElementById(getColorDivId(filtergenera.genera[i].name)).style.borderLeftColor = filtergenera.genera[i].color;
 }
 
-function filter_clicked_felines_(cb) {
-	
+function getInnerHtmlFilterCheckBox(genus) {
+	var innerHtml =
+	'<div style="padding: 5px 15px;">'+
+		'<div style="height: 35px; display: flex; flex-flow: column; justify-content: center; border-left: 6px solid black; padding: 0px 15px;" id = "' + getColorDivId(genus) + '">'+
+			'<label for="' + getCheckBoxId(genus) + '" class="label-cbx">'+
+				'<input id="' + getCheckBoxId(genus) + '" type="checkbox" onclick="filter_clicked(this)" class="invisible" checked>'+
+				'<div class="checkbox">'+
+					'<svg width="60px" height="60px" viewBox="0 0 40 40">'+
+						'<path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>'+
+						'<polyline points="4 11 8 15 16 6"></polyline>'+
+					'</svg>'+
+				'</div>'+
+				'<div class="cbxlabel" style="height: 30px; display: table; padding-left: 10px"> <p style="display: table-cell; text-align: center; vertical-align: middle;">' + genus + '</p></div>'+
+			'</label>'+
+		'</div>'+
+	'</div>';
+	return innerHtml;
 }
 
-function filter_clicked_primates_(cb) {
-	
-}
-
-function getSpeciesColor(species) {
-	switch (species) {
-		case "birds": 		return "rgba(198, 200,   0, 1)";
-		case "felines": 	return "rgba(235,  63, 119, 1)";
-		case "primates": 	return "rgba( 50, 208,  52, 1)";
+function getAllEnabledGenera() {
+	var genera = [];
+	for (var i = 0; i < filtergenera.genera.length; i++) {
+		var genname = filtergenera.genera[i].name;
+		if (document.getElementById(getCheckBoxId(genname)).checked)
+			genera.push(genname);
 	}
+	return genera;
+}
+
+function getColorDivId(genus) { return 'colordiv_' + getCheckBoxId(genus); }
+function getCheckBoxId(genus) { return genus.toLowerCase() + 'cbx'; }
+
+function filter_clicked(cb) {
+	markerCluster.filterOnString();
+}
+
+function getColor(genus) {
+	for (var i = 0; i < filtergenera.genera.length; i++)
+		if (genus.toLowerCase() == filtergenera.genera[i].name.toLowerCase())
+			return filtergenera.genera[i].color;
+	return document.getElementById(getColorDivId("Other")).style.borderLeftColor;
 }

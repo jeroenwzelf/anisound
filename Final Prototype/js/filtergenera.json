@@ -1,0 +1,37 @@
+var filtergenera = {
+	"genera": [
+		{	"name": "Tinamus",
+			"color": "#46d827"
+		},
+		{	"name": "Turdus",
+			"color": "#d672bd"
+		},
+		{	"name": "Zosterops",
+			"color": "#fd491e"
+		},
+		{	"name": "Pycnonotus",
+			"color": "#116243"
+		},
+		{	"name": "Tangara",
+			"color": "#f95368"
+		},
+		{	"name": "Larus",
+			"color": "#98693a"
+		},
+		{	"name": "Parus",
+			"color": "#12789d"
+		},
+		{	"name": "Cisticola",
+			"color": "#2fcb93"
+		},
+		{	"name": "Phylloscopus",
+			"color": "#920d0d"
+		},
+		{	"name": "Corvus",
+			"color": "#e8bb66"
+		},
+		{	"name": "Other",
+			"color": "rgba(198, 200, 0, 1)"
+		}
+	]
+}

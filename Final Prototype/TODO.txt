@@ -41,10 +41,10 @@
 [ ] restrict google API key to https://jeroenwzelf.github.io/*
 
 [ ] species filter
-	[ ] add it
-		[ ] functionality in search query
-		[ ] add genus' names
-			[ ] find genus'
+	[x] add it
+		[x] functionality in search query
+		[x] add genus' names
+			[x] find genus'
 			[ ] link wikipedia to genus
-[ ] add arianna's aboutpage line
-[ ] move loading spinner to on map
+[X] add arianna's aboutpage line
+[x] move loading spinner to on map

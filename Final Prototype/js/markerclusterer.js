@@ -835,17 +835,36 @@ MarkerClusterer.prototype.createClusters_ = function() {
   }
 }
 
-MarkerClusterer.prototype.filterOnString = function(string) {
+MarkerClusterer.prototype.filterOnString = function() {
+  var string = document.getElementById("searchbar").value.toLowerCase();
+
+  // make every marker visible
   for (var i = 0, marker; marker = this.invisibleMarkers[i]; i++) {
     this.markers_.push(marker);
   }
   this.invisibleMarkers = [];
-  if (string.length > 0) {
-    for (var i = 0, marker; marker = this.markers_[i]; i++) {
-      if (!marker.name_en.toLowerCase().includes(string) && !marker.name_la.toLowerCase().includes(string)) {
-        this.removeMarker_(marker); i--;
-        this.invisibleMarkers.push(marker);
+
+  // for every marker, check if it needs to be filtered out
+  var genera = getAllEnabledGenera();
+  for (var i = 0, marker; marker = this.markers_[i]; i++) {
+    var isInFilter = false;
+    // check for name filter
+    if (string.length == 0) isInFilter = true;
+    else if (marker.name_en.toLowerCase().includes(string) || marker.name_la.toLowerCase().includes(string)) isInFilter = true;
+    if (isInFilter) {
+      isInFilter = false;
+      // check for genus filter
+      for (var j=0, genname; !isInFilter && j < genera.length; j++) {
+        var genname = genera[j].toLowerCase();
+        if (genname == 'other') {
+          isInFilter = true;
+        }
+        else if (marker.gen.toLowerCase().includes(genname)) isInFilter = true;
       }
+    }
+    if (!isInFilter) {
+      this.removeMarker_(marker); i--;
+      this.invisibleMarkers.push(marker);
     }
   }
   this.repaint();
@@ -907,7 +926,7 @@ function addPopupWindowListeners(infoWindow, marker) {
       });
 
       // set titlebar background color
-      document.getElementById("EntryName").style.backgroundColor = getSpeciesColor(infoWindow.anchor.type);
+      document.getElementById("EntryName").style.backgroundColor = getColor(infoWindow.anchor.gen);
 
       // set audio ended eventlistener
       document.getElementById('audio').addEventListener('ended', function() {

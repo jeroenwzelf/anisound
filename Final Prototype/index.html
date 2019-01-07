@@ -123,12 +123,14 @@
 		$("#deselectAllButton").click(function(e) {
 			for (var i = 0; i < filtergenera.genera.length; i++)
 				document.getElementById(getCheckBoxId(filtergenera.genera[i].name)).checked = false;
+			markerCluster.filterOnString();
 			e.stopPropagation();
 		});
 
 		$("#selectAllButton").click(function(e) {
 			for (var i = 0; i < filtergenera.genera.length; i++)
 				document.getElementById(getCheckBoxId(filtergenera.genera[i].name)).checked = true;
+			markerCluster.filterOnString();
 			e.stopPropagation();
 		});
 

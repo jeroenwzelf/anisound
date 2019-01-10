@@ -1,10 +1,9 @@
 <!--
- ! @name index.html for Ani-Sound
+ ! @name index.html
  ! @author Jeroen Donkers
  ! @fileoverview
  ! The main html file for Ani-Sound. This is where the scripts are loaded and all the content is created.
- ! It contains the page layout, some UI functionality (mostly button clicking), and it initializes the 
- ! scripts used to set up the interactive world map with its entries.
+ ! It contains the page layout and it initializes the scripts used to set up the interactive world map with its entries.
  ! -->
 
 <!DOCTYPE>
@@ -16,10 +15,7 @@
 
     <style type="text/css">
       body {
-      	position: relative;
-		width: 100%;
 		height: 100%;
-        margin: 0;
         font-family: Arial;
         font-size: 16px;
       }
@@ -36,25 +32,19 @@
 	<!-- Load an icon library to show a hamburger menu (bars) on small screens -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<!-- anisound scripts -->
-    <script type="text/javascript" src="js/filtergenera.json"></script>
+	<!-- Ani-Sound scripts -->
+	<script type="text/javascript" src="js/ui-manager.js"></script>
+    <script type="text/javascript" src="json/filtergenera.json"></script>
     <script type="text/javascript" src="js/markerclusterer.js"></script>
-    <script type="text/javascript" src="js/entrymanager.js"></script>
+    <script type="text/javascript" src="js/query-manager.js"></script>
     <script type="text/javascript" src="js/styledMap.js"></script>
 	<link rel="stylesheet" type="text/css" href="cs/style.css">
-
-    <script type="text/javascript">
-		function init() {
-			init_map(getStyledMap());
-			getInnerHtmlFilterList();
-		}
-    </script>
 </head>
 <body>
-	<img id="birds" src="images/markers/animals/birds.png" style="display:none" crossOrigin="Anonymous" onload="init()">
+	<img id="birds" src="images/markers/animals/birds.png" style="display:none" onload="getInnerHtmlFilterList(); init_map(getStyledMap());">
 	<!-- Sidebar -->
-	<div class="w3-sidebar w3-bar-block filter_closed" id="speciesfilter">
-		<button id="closeSpeciesFilterButton" class="w3-bar-item w3-button w3-large">Close &times;</button>
+	<div class="w3-sidebar w3-bar-block" id="genusfilter">
+		<button id="closeGenusfilterButton" class="w3-bar-item w3-button w3-large">Close &times;</button>
 		<div id=genuslist> </div>
 		<button style="position: absolute; bottom: 20; padding: 10px" id="deselectAllButton" class="w3-bar-item w3-button w3-large">Deslect All</button>
 		<button style="position: absolute; bottom: 70; padding: 10px" id="selectAllButton" class="w3-bar-item w3-button w3-large">Select All</button>
@@ -62,7 +52,7 @@
 	<!-- Top Navigation Bar -->
 	<div class="topnav" id="myTopnav">
 		<!-- Genus Filter -->
-		<a id="openSpeciesFilterButton" href="javascript:void(0);" class="icon">
+		<a id="openGenusfilterButton" href="javascript:void(0);" class="icon">
 			<i class="fa fa-bars"></i>
 			<span class="HideOnSmallWidth" style="">Genus filter</span>
 		</a>
@@ -83,7 +73,7 @@
 	<!-- Query Loading Spinner -->
 	<div id="loader" class="loader HideOnMicroHeight" style="display: none" data-toggle="tooltip" data-placement="bottom"></div> 
 	<!-- About Popup -->
-	<div id="popUp" class="popUpClosed">
+	<div id="popUp">
 	    <div id="close" class="close"><i class="fa fa-times"></i></div>
 	    <div id="new"><span>ABOUT</span></div>
 	    <h2><strong>Ani-Sound</strong> is a <a title="Leiden University Website" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that Interactive Information Displays. This application visualizes animal data from the online database <a title="Xeno-canto Website" href="https://www.xeno-canto.org/about/xeno-canto"><em>Xeno-canto</em></a> in a topographical way.<br/><br/></h2>
@@ -95,78 +85,7 @@
 	  	</div>
 	    <a href="https://github.com/jeroenwzelf/anisound" target="_blank" class="aboutbutton">Visit Page</a>
   	</div>
-	</body>
 
-	<!-- Opening and closing windows (genus filter, about popup) -->
-	<script type="text/javascript">
-		$("#clearSearchIcon").click(function(e) {
-			var searchbar = document.getElementById("searchbar");
-			searchbar.value = '';
-			markerCluster.filterOnString();
-		});
-
-		$("#searchbar").keyup(function(e) {
-		    markerCluster.filterOnString();
-		    $("#popUp").addClass("popUpClosed");
-		    $('#speciesfilter').addClass('filter_closed');
-			$('#speciesfilter').removeClass('filter_open');
-		    e.stopPropagation();
-		});
-
-		$("#searchbar").click(function(e) {
-			$("#popUp").addClass("popUpClosed");
-		    $('#speciesfilter').addClass('filter_closed');
-			$('#speciesfilter').removeClass('filter_open');
-		    e.stopPropagation();
-		});
-
-		$("#deselectAllButton").click(function(e) {
-			for (var i = 0; i < filtergenera.genera.length; i++)
-				document.getElementById(getCheckBoxId(filtergenera.genera[i].name)).checked = false;
-			markerCluster.filterOnString();
-			e.stopPropagation();
-		});
-
-		$("#selectAllButton").click(function(e) {
-			for (var i = 0; i < filtergenera.genera.length; i++)
-				document.getElementById(getCheckBoxId(filtergenera.genera[i].name)).checked = true;
-			markerCluster.filterOnString();
-			e.stopPropagation();
-		});
-
-		$("#openAboutButton").click(function(e) {
-			$("#popUp").removeClass("popUpClosed");
-			e.stopPropagation();
-		});
-
-		$("#close").click(function(e) {
-			$("#popUp").addClass("popUpClosed");
-		});
-
-		$('#openSpeciesFilterButton').click(function(e) {
-			e.stopPropagation();
-			$('#speciesfilter').removeClass('filter_closed');
-			$('#speciesfilter').addClass('filter_open');
-		});
-
-		$('#closeSpeciesFilterButton').click(function(e) {
-			$('#speciesfilter').addClass('filter_closed');
-			$('#speciesfilter').removeClass('filter_open');
-		});
-
-		$('#speciesfilter').click(function(e) {
-			e.stopPropagation();
-		});
-
-		$("#popUp").click(function(e) {
-			e.stopPropagation();
-		});
-
-		$(document).click(function(e) {
-			$(':focus').blur();
-			$('#speciesfilter').addClass('filter_closed');
-			$('#speciesfilter').removeClass('filter_open');
-			$("#popUp").addClass("popUpClosed");
-		});
-	</script>
+  	<script type="text/javascript" src="js/onclick-logic.js"></script>
+</body>
 </html>

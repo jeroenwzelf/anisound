@@ -69,3 +69,17 @@ $('#openGenusfilterButton').click(function(e) {
 	$(':focus').blur();
 	e.stopPropagation();
 });
+
+function setPlayButtonClickListener() {
+	$('#audiobutton').click(function(e) {
+		if (document.getElementById('audio').paused) {
+			$('#audiobutton').addClass("paused");
+			document.getElementById('audio').play();
+		}
+		else {
+			$('#audiobutton').removeClass("paused");
+			document.getElementById('audio').pause();
+		}
+		return false;
+	});
+}

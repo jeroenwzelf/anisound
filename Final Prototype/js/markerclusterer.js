@@ -4,7 +4,7 @@
  * @author Luke Mahe, edited by Jeroen Donkers
  * @fileoverview
  * The library creates and manages per-zoom-level clusters for large amounts of
- * markers. It also incorporates Ani-Sound-specific functions such as filtering and infowindows when clicking on a marker
+ * markers. It also incorporates Ani-Sound-specific string filtering
  */
 
 /**
@@ -860,88 +860,6 @@ MarkerClusterer.prototype.filterOnString = function() {
     }
   }
   this.repaint();
-}
-
-/* @author Jeroen Donkers */
-/* -- Adds click-listeners for the Google Maps Marker
-      (on clicking a marker, it creates the infoWindow) -- */
-function addPopupWindowListeners(infoWindow, marker) {
-  google.maps.event.clearListeners(marker, 'click');  // clearing old marker onclick events
-  marker.addListener('click', function() {
-    var contentString =
-    '<div id="container">'+
-      '<div id="EntryTop">'+
-        '<div id="EntryName">'+
-          '<span>' + this.name_en + '</span>'+
-        '</div>'+
-        '<div style="flex: auto"></div>'+
-        '<div id="EntryPlay">'+
-          '<button id="audiobutton" class="button paused" type="button"></button>'+
-        '</div>'+
-      '</div>'+
-      '<div id="EntrySub">'+
-        '<span>' + this.name_la + '</span>'+
-      '</div>'+
-      '<div id="EntryImgBox">'+
-        '<img id="EntryImg" alt="(Loading image of ' + this.name_en + ')" height="200">' +
-      '</div>'+
-      '<div id="EntryLocation">'+
-        '<div style=align-self: center;>'+
-          '<img id="EntryFlag" height="20">'+
-        '</div>'+
-        '<div id="EntryLoc">'+
-          '<span>' + this.loc + '</span>'+
-        '</div>'+
-      '</div>'+
-      '<audio id="audio" autoplay> <source src="' + this.url + '" type="audio/mpeg"></audio>'+
-    '</div>';
-
-    infoWindow.setContent(contentString);
-    infoWindow.open(this.getMap(), this);
-
-    google.maps.event.clearListeners(infoWindow, 'domready');
-    google.maps.event.addListener(infoWindow,'domready', function() {
-      // Get image
-      $.getJSON("https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-      {
-          tags: infoWindow.anchor.name_la,
-          tagmode: "any",
-          format: "json"
-      },
-      function(data) {
-          var rnd = Math.floor(Math.random() * data.items.length);
-          var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
-          document.getElementById("EntryImg").src = image_src;
-      });
-
-      // Get flag
-      var flag_api_endpoint = "https://restcountries.eu/rest/v2/name/";
-      httpGetAsync(flag_api_endpoint + marker.country, function(data) {
-        document.getElementById("EntryFlag").src = "https://www.countryflags.io/" + data[0].alpha2Code + "/shiny/64.png";
-      });
-
-      // set titlebar background color
-      document.getElementById("EntryName").style.backgroundColor = getColor(infoWindow.anchor.gen);
-
-      // set audio ended eventlistener
-      document.getElementById('audio').addEventListener('ended', function() {
-        $('#audiobutton').removeClass("paused");
-      });
-
-      // set play button clicklistener
-      $('#audiobutton').click(function(e) {
-        if (document.getElementById('audio').paused) {
-          $('#audiobutton').addClass("paused");
-          document.getElementById('audio').play();
-        }
-        else {
-          $('#audiobutton').removeClass("paused");
-          document.getElementById('audio').pause();
-        }
-        return false;
-      });
-    });
-  });
 }
 
 /**

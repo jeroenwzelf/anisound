@@ -7,35 +7,11 @@
  * and its corresponding functionality. It also implements the loading spinner when this script is querying xeno-canto entries.
 */
 
-var map;
-var markerCluster;
-
-/* -- Initializes the Google Map, sets its custom style,
-	  starts up the MarkerClusterer and starts querying for entries -- */
-function init_map(mapstyle) {
-	var center = new google.maps.LatLng(37.4419, -122.1419);
-	map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 3,
-		center: center,
-		mapTypeId: 'styled_map',
-		mapTypeControl: false
-	});
-	map.mapTypes.set('styled_map', mapstyle);
-	map.setMapTypeId('styled_map');
-
-	google.maps.event.addListener(map,'tilesloaded', function () {
-		google.maps.event.clearListeners(map, 'tilesloaded');
-		markerCluster = new MarkerClusterer(map);
-		GetXenoCantoEntries(1);
-	});
-}
-
-
 /* -- Creates the inner HTML for the Genus Filter -- */
 function getInnerHtmlFilterList() {
 	var innerHTML = "";
 	for (var i = 0; i < filtergenera.genera.length; i++)
-    	innerHTML = innerHTML + getInnerHtmlFilterCheckBox(filtergenera.genera[i].name);
+		innerHTML = innerHTML + getInnerHtmlFilterCheckBox(filtergenera.genera[i].name);
 	document.getElementById('genuslist').innerHTML = innerHTML;
 	for (var i = 0; i < filtergenera.genera.length; i++)
 		document.getElementById(getColorDivId(filtergenera.genera[i].name)).style.borderLeftColor = filtergenera.genera[i].color;
@@ -47,7 +23,7 @@ function getInnerHtmlFilterCheckBox(genus) {
 	'<div style="padding: 5px 15px;">'+
 		'<div style="height: 35px; display: flex; flex-flow: column; justify-content: center; border-left: 6px solid black; padding: 0px 15px;" id = "' + getColorDivId(genus) + '">'+
 			'<label for="' + getCheckBoxId(genus) + '" class="label-cbx">'+
-				'<input id="' + getCheckBoxId(genus) + '" type="checkbox" onclick="filter_clicked(this)" class="invisible" checked>'+
+				'<input id="' + getCheckBoxId(genus) + '" type="checkbox" onclick="markerCluster.filterOnString()" class="invisible" checked>'+
 				'<div class="checkbox">'+
 					'<svg width="60px" height="60px" viewBox="0 0 40 40">'+
 						'<path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>'+
@@ -57,6 +33,37 @@ function getInnerHtmlFilterCheckBox(genus) {
 				'<div class="cbxlabel" style="height: 30px; display: table; padding-left: 10px"> <p style="display: table-cell; text-align: center; vertical-align: middle;">' + genus + '</p></div>'+
 			'</label>'+
 		'</div>'+
+	'</div>';
+	return innerHtml;
+}
+
+function getInnerHtmlInfoWindow(marker) {
+	var innerHtml =
+	'<div id="container">'+
+		'<div id="EntryTop">'+
+			'<div id="EntryName">'+
+				'<span>' + marker.name_en + '</span>'+
+			'</div>'+
+			'<div style="flex: auto"></div>'+
+			'<div id="EntryPlay">'+
+				'<button id="audiobutton" class="button paused" type="button"></button>'+
+			'</div>'+
+		'</div>'+
+		'<div id="EntrySub">'+
+			'<span>' + marker.name_la + '</span>'+
+		'</div>'+
+		'<div id="EntryImgBox">'+
+			'<img id="EntryImg" alt="(Loading image of ' + marker.name_en + ')" height="200">' +
+		'</div>'+
+		'<div id="EntryLocation">'+
+			'<div style=align-self: center;>'+
+				'<img id="EntryFlag" height="20">'+
+			'</div>'+
+			'<div id="EntryLoc">'+
+				'<span>' + marker.loc + '</span>'+
+			'</div>'+
+		'</div>'+
+		'<audio id="audio" autoplay> <source src="' + marker.url + '" type="audio/mpeg"></audio>'+
 	'</div>';
 	return innerHtml;
 }
@@ -72,21 +79,16 @@ function getAllEnabledGenera() {
 	return genera;
 }
 
-/* -- Returns the ID of genera checkboxes -- */
-function getColorDivId(genus) { return 'colordiv_' + getCheckBoxId(genus); }
-function getCheckBoxId(genus) { return genus.toLowerCase() + 'cbx'; }
-
-/* -- Happens when a genus checkbox is clicked -- */
-function filter_clicked(cb) {
-	markerCluster.filterOnString();
-}
-
 /* -- Returns the color of a specific genus -- */
 function getColor(genus) {
 	for (var i = 0; i < filtergenera.genera.length; i++)
 		if (genus.toLowerCase() == filtergenera.genera[i].name.toLowerCase())
 			return filtergenera.genera[i].color;
 	return document.getElementById(getColorDivId("Other")).style.borderLeftColor;
+}
+
+function getSearchBarContent() {
+	return document.getElementById("searchbar").value;
 }
 
 /* -- Enables query loading spinner -- */
@@ -101,3 +103,7 @@ function enableLoad(name, gen) {
 function disableLoad() {
 	document.getElementById("loader").style.display = "none";
 }
+
+/* -- Returns the ID of genera checkboxes -- */
+function getColorDivId(genus) { return 'colordiv_' + getCheckBoxId(genus); }
+function getCheckBoxId(genus) { return genus.toLowerCase() + 'cbx'; }

@@ -31,12 +31,12 @@ function GetXenoCantoEntries(page) {
 	var SW = map.getBounds().getSouthWest();
 	var NE = map.getBounds().getNorthEast();
 	var box = " box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng();
-	var query = "?query=" + document.getElementById("searchbar").value;
+	var query = "?query=" + getSearchBarContent();
 	var gen = getQueryGen();
 
 	var httprequest = CORS_PROXY + XC_ENDPOINT + query + box + gen;
 	if (!httprequest_old) httprequest_old = httprequest;
-	enableLoad(document.getElementById("searchbar").value, getGen(gen));
+	enableLoad(query, gen);
 	httpGetAsync(httprequest + "&page=" + page, function(data) {
 		var nextpage = page+1;
 		if (data != null) {

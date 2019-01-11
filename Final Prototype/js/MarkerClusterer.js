@@ -400,7 +400,7 @@ MarkerClusterer.prototype.getCalculator = function() {
  * @param {Array.<google.maps.Marker>} markers The markers to add.
  * @param {boolean=} opt_nodraw Whether to redraw the clusters.
  */
-MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw, opt_filterstring) {
+MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw) {
   if (markers.length) {
     for (var i = 0, marker; marker = markers[i]; i++) {
       this.pushMarkerTo_(marker);
@@ -410,7 +410,7 @@ MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw, opt_filters
       this.pushMarkerTo_(markers[marker]);
     }
   }
-  this.filterOnString(opt_filterstring);
+  this.filterOnString();
   this.redraw();
 };
 
@@ -837,7 +837,6 @@ MarkerClusterer.prototype.filterOnString = function() {
   this.invisibleMarkers = [];
 
   // for every marker, check if it needs to be filtered out
-  var genera = getAllEnabledGenera();
   for (var i = 0, marker; marker = this.markers_[i]; i++) {
     var isInFilter = false;
     // check for name filter
@@ -846,12 +845,12 @@ MarkerClusterer.prototype.filterOnString = function() {
     if (isInFilter) {
       isInFilter = false;
       // check for genus filter
-      for (var j=0, genname; !isInFilter && j < genera.length; j++) {
-        var genname = genera[j].toLowerCase();
-        if (genname == 'other') {
-          isInFilter = true;
+      for (var j = 0; j < filtergenera.genera.length; j++) {
+        var genname = filtergenera.genera[j].name.toLowerCase();
+        if (isGenusEnabled(genname)) {
+          if (genname == "other" && isGenusOther(marker.gen)) isInFilter = true;
+          else if (marker.gen.toLowerCase().includes(genname)) isInFilter = true;
         }
-        else if (marker.gen.toLowerCase().includes(genname)) isInFilter = true;
       }
     }
     if (!isInFilter) {

@@ -23,6 +23,14 @@ function httpGetAsync(url, callback) {
 	xmlHttp.send(null);
 }
 
+/* -- Sets up the genus query parameter -- */
+function getQueryGenus() {
+	var enabledGenera = getAllEnabledGenera();
+	if (enabledGenera.indexOf("Other") > -1) return "";
+	var rnd = Math.floor(Math.random() * enabledGenera.length);
+	return " gen:" + enabledGenera[rnd];
+}
+
 /* -- A sophisticated algorithm ensuring that entries get loaded from the
 	  xeno-canto API. It continuously requests pages from the API and it
 	  updates its query using the current Map viewport, the searchbar contents
@@ -32,7 +40,7 @@ function GetXenoCantoEntries(page) {
 	var NE = map.getBounds().getNorthEast();
 	var box = " box:" + SW.lat() + "," + SW.lng() + "," + NE.lat() + "," + NE.lng();
 	var query = "?query=" + getSearchBarContent();
-	var gen = getQueryGen();
+	var gen = getQueryGenus();
 
 	var httprequest = CORS_PROXY + XC_ENDPOINT + query + box + gen;
 	if (!httprequest_old) httprequest_old = httprequest;
@@ -100,18 +108,4 @@ function getMarkerIcon(dataEntry) {
 	context.stroke();	// colored circle
 
 	return canvas.toDataURL();
-}
-
-/* -- Sets up the genus query parameter -- */
-function getQueryGen() {
-	var enabledGenera = getAllEnabledGenera();
-	if (enabledGenera.indexOf("Other") > -1) return "";
-	var rnd = Math.floor(Math.random() * enabledGenera.length);
-	return " gen:" + enabledGenera[rnd];
-}
-
-/* -- Gets the genus from a certain genus query parameter -- */
-function getGen(queryGen) {
-	if (queryGen.length > 0) return queryGen.split(':')[1];
-	return "";
 }

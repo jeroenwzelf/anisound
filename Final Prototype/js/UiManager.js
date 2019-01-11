@@ -77,6 +77,20 @@ function getAllEnabledGenera() {
 	return genera;
 }
 
+function isGenusEnabled(genus) {
+	if (document.getElementById(getCheckBoxId(genus)).checked)
+		return true;
+	return false;
+}
+
+function isGenusOther(genus) {
+	for (var i = 0; i < filtergenera.genera.length; i++) {
+		var genname = filtergenera.genera[i].name;
+		if (genus.includes(genname)) return false;
+	}
+	return true;
+}
+
 /* -- Returns the color of a specific genus -- */
 function getColor(genus) {
 	for (var i = 0; i < filtergenera.genera.length; i++)
@@ -92,9 +106,17 @@ function getSearchBarContent() {
 /* -- Enables query loading spinner -- */
 function enableLoad(name, gen) {
 	var loader = document.getElementById("loader");
-	if (gen.length > 0) gen = " (" + gen + ")";
+
+	if (name.length > 0) name = name.split('=')[1];
+	if (name.length > 0) name = "name = " + name + ", ";
+	if (gen.length > 0) gen = gen.split(':')[1];
+	if (gen.length > 0) gen = "genus = " + gen;
+
+	var form = "of the form: " + name + gen;
+	if (name.length + gen.length <= 0) form = "";
+
 	loader.style.display = "block";
-	loader.title = "Ani-Sound is currently loading " + name + gen + " entries from the online Xeno-canto database.";
+	loader.title = "Ani-Sound is currently loading entries " + form + " from the online Xeno-canto database.";
 }
 
 /* -- Disables query loading spinner -- */

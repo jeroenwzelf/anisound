@@ -8,36 +8,37 @@
 
 <!DOCTYPE>
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" type="image/png" href="images/logo/logo_medium.png">
-    <title>Ani-Sound</title>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" type="image/png" href="images/logo/logo_medium.png">
+	<title>Ani-Sound</title>
 
-    <style type="text/css">
-      body {
-		height: 100%;
-        font-family: Arial;
-        font-size: 16px;
-      }
+	<style type="text/css">
+		body {
+			height: 100%;
+			font-family: Arial;
+			font-size: 16px;
+		}
 
-      #map {
-		width: 100%;
-		height: calc(100% - 70px);
-      }
-    </style>
-    <!-- Google Maps API, JQuery and Bootstrap -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhjEZgjkFvvD2Yvf099m5qtvipcm79ays&callback=initialize"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		#map {
+			width: 100%;
+			height: calc(100% - 70px);
+		}
+	</style>
+	<!-- Google Maps API, JQuery and Bootstrap -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhjEZgjkFvvD2Yvf099m5qtvipcm79ays&callback=initialize"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- Load an icon library to show a hamburger menu (bars) on small screens -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<!-- Ani-Sound scripts -->
-	<script type="text/javascript" src="js/ui-manager.js"></script>
-    <script type="text/javascript" src="json/filtergenera.json"></script>
-    <script type="text/javascript" src="js/markerclusterer.js"></script>
-    <script type="text/javascript" src="js/query-manager.js"></script>
-    <script type="text/javascript" src="js/styledMap.js"></script>
+	<script type="text/javascript" src="json/filtergenera.json"></script>
+	<script type="text/javascript" src="js/UiManager.js"></script>
+	<script type="text/javascript" src="js/MapManager.js"></script>
+	<script type="text/javascript" src="js/QueryManager.js"></script>
+	<script type="text/javascript" src="js/MarkerClusterer.js"></script>
+	<script type="text/javascript" src="js/styledMap.js"></script>
 	<link rel="stylesheet" type="text/css" href="cs/style.css">
 </head>
 <body>
@@ -74,18 +75,18 @@
 	<div id="loader" class="loader HideOnMicroHeight" style="display: none" data-toggle="tooltip" data-placement="bottom"></div> 
 	<!-- About Popup -->
 	<div id="popUp">
-	    <div id="close" class="close"><i class="fa fa-times"></i></div>
-	    <div id="new"><span>ABOUT</span></div>
-	    <h2><strong>Ani-Sound</strong> is a <a title="Leiden University Website" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that Interactive Information Displays. This application visualizes animal data from the online database <a title="Xeno-canto Website" href="https://www.xeno-canto.org/about/xeno-canto"><em>Xeno-canto</em></a> in a topographical way.<br/><br/></h2>
-	    <h2 style="font-size: 11px !important; margin-top: 10px !important;">This project has been written in <em>HTML+JavaScript</em> and is available as open-source software on its GitHub page.</h2><br>
-	    <div style="display: flex; flex-flow: row; padding: 5px;">
-	  		<p style="margin: -6px 0 0 10px; color: silver; font-size: 12px;">Arianna Freni </br> Jeroen Donkers</p>
-	  		<div style="flex: auto"></div>
-	  		<p style="margin: -6px 0 0 10px; color: silver; font-size: 12px;"></br>Ani-Sound: v3.0.4</p>
-	  	</div>
-	    <a href="https://github.com/jeroenwzelf/anisound" target="_blank" class="aboutbutton">Visit Page</a>
-  	</div>
+		<div id="close" class="close"><i class="fa fa-times"></i></div>
+		<div id="new"><span>ABOUT</span></div>
+		<h2><strong>Ani-Sound</strong> is a <a title="Leiden University Website" href="https://www.universiteitleiden.nl/en"><em>Leiden University</em></a> project that Interactive Information Displays. This application visualizes animal data from the online database <a title="Xeno-canto Website" href="https://www.xeno-canto.org/about/xeno-canto"><em>Xeno-canto</em></a> in a topographical way.<br/><br/></h2>
+		<h2 style="font-size: 11px !important; margin-top: 10px !important;">This project has been written in <em>HTML+JavaScript</em> and is available as open-source software on its GitHub page.</h2><br>
+		<div style="display: flex; flex-flow: row; padding: 5px;">
+			<p style="margin: -6px 0 0 10px; color: silver; font-size: 12px;">Arianna Freni </br> Jeroen Donkers</p>
+			<div style="flex: auto"></div>
+			<p style="margin: -6px 0 0 10px; color: silver; font-size: 12px;"></br>Ani-Sound: v3.0.4</p>
+		</div>
+		<a href="https://github.com/jeroenwzelf/anisound" target="_blank" class="aboutbutton">Visit Page</a>
+	</div>
 
-  	<script type="text/javascript" src="js/onclick-logic.js"></script>
+	<script type="text/javascript" src="js/onclick-logic.js"></script>
 </body>
 </html>

@@ -49,7 +49,7 @@ $("#clearSearchIcon").click(function(e) {
 
 // Pressing a key in the search bar
 $("#searchbar").keyup(function(e) {
-    markerCluster.filterOnString();
+	markerCluster.filterOnString();
 });
 
 // Opening about popup
@@ -70,7 +70,7 @@ $('#openGenusfilterButton').click(function(e) {
 	e.stopPropagation();
 });
 
-function setPlayButtonClickListener() {
+function setPlayButtonListeners() {
 	$('#audiobutton').click(function(e) {
 		if (document.getElementById('audio').paused) {
 			$('#audiobutton').addClass("paused");
@@ -81,5 +81,8 @@ function setPlayButtonClickListener() {
 			document.getElementById('audio').pause();
 		}
 		return false;
+	});
+	document.getElementById('audio').addEventListener('ended', function() {
+		$('#audiobutton').removeClass("paused");
 	});
 }

@@ -1,10 +1,8 @@
 /* 
- * @name ui-manager.js
+ * @name UiManager.js
  * @author Jeroen Donkers
  * @fileoverview
- * This file initializes the Google Map and will repeatedly query the xeno-canto API for new entries.
- * It also draws the entry icons, and is responsible for filling the genus filter with the list of genera + checkboxes,
- * and its corresponding functionality. It also implements the loading spinner when this script is querying xeno-canto entries.
+ * This file provides a way for the back-end to change the elements of the front-end
 */
 
 /* -- Creates the inner HTML for the Genus Filter -- */

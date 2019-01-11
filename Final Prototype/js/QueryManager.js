@@ -1,5 +1,5 @@
 /* 
- * @name query-manager.js
+ * @name QueryManager.js
  * @author Jeroen Donkers
  * @fileoverview
  * This file has functionality to repeatedly query the xeno-canto API for new entries.
@@ -13,10 +13,10 @@ var httprequest_old = false;
 function httpGetAsync(url, callback) {
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() {
-	    if (xmlHttp.readyState == 4) {
-	    	disableLoad();
-	    	if (xmlHttp.status == 200) callback(JSON.parse(xmlHttp.responseText));
-	    	else callback(null);
+		if (xmlHttp.readyState == 4) {
+			disableLoad();
+			if (xmlHttp.status == 200) callback(JSON.parse(xmlHttp.responseText));
+			else callback(null);
 		}
 	}
 	xmlHttp.open("GET", url, true);
@@ -57,17 +57,17 @@ function GetXenoCantoEntries(page) {
 /* -- Creates a Google Maps Marker for dataEntry -- */
 function getXenoCantoMarkerFromJson(dataEntry) {
 	var marker = new google.maps.Marker({
-    	name_en: dataEntry.en,
-    	name_la: dataEntry.gen + " " + dataEntry.sp,
-    	gen: dataEntry.gen,
-    	type: dataEntry.type,
-    	country: dataEntry.cnt,
-    	loc: dataEntry.loc,
-    	url: "https://" + dataEntry.file.slice(2),
-    	animation: google.maps.Animation.DROP,
-        position: new google.maps.LatLng(dataEntry.lat,
-	    	dataEntry.lng),
-        icon: getMarkerIcon(dataEntry)
+		name_en: dataEntry.en,
+		name_la: dataEntry.gen + " " + dataEntry.sp,
+		gen: dataEntry.gen,
+		type: dataEntry.type,
+		country: dataEntry.cnt,
+		loc: dataEntry.loc,
+		url: "https://" + dataEntry.file.slice(2),
+		animation: google.maps.Animation.DROP,
+		position: new google.maps.LatLng(dataEntry.lat,
+			dataEntry.lng),
+		icon: getMarkerIcon(dataEntry)
 	});
 	return marker;
 }

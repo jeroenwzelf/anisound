@@ -4,7 +4,7 @@
  * @author Luke Mahe, edited by Jeroen Donkers
  * @fileoverview
  * The library creates and manages per-zoom-level clusters for large amounts of
- * markers. It also incorporates Ani-Sound-specific string filtering
+ * markers. It also incorporates Ani-Sound-specific string filtering.
  */
 
 /**
@@ -741,7 +741,7 @@ MarkerClusterer.prototype.repaint = function() {
 MarkerClusterer.prototype.redraw = function() {
   this.createClusters_();
   for (var i = 0, marker; marker = this.markers_[i]; i++) {
-    addPopupWindowListeners(this.infoWindow, this.markers_[i]);
+    addInfoWindowListeners(this.infoWindow, this.markers_[i]);
   }
 };
 
@@ -934,7 +934,7 @@ Cluster.prototype.addMarker = function(marker) {
   }
 
   marker.isAdded = true;
-  addPopupWindowListeners(this.infoWindow, marker);
+  addInfoWindowListeners(this.infoWindow, marker);
   this.markers_.push(marker);
 
   var len = this.markers_.length;
